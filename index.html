@@ -1,0 +1,990 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Simon Joseph K | Technical Support Engineer & IT Operations Specialist</title>
+  <meta name="description" content="Portfolio of Simon Joseph K, Technical Support Engineer based in Bengaluru. Incident resolution, ITSM, ServiceNow, Identity & Access (Okta/Azure AD), Intune, and Data Analytics.">
+  <meta name="keywords" content="Technical Support Engineer, ServiceNow, Okta, Azure AD, Intune, ITIL, Bengaluru, Simon Joseph K">
+  <meta name="author" content="Simon Joseph K">
+  <meta property="og:title" content="Simon Joseph K | Technical Support Engineer">
+  <meta property="og:description" content="Mission Control for IT Support — Root cause analysis, ITSM, Identity & Access, and SLA management.">
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://simonjosephk7.github.io/Portfollio/">
+  <meta name="linkedin:profile" content="simon-joseph-k-887528306">
+  <meta name="theme-color" content="#05070d">
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>⚡</text></svg>">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500;600;700&family=Space+Grotesk:wght@500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <!-- Custom Glow Cursor -->
+  <div class="glow-cursor" id="glowCursor"></div>
+  <div class="cursor-dot" id="cursorDot"></div>
+
+  <!-- Background Layer: Canvas & Grid Overlay -->
+  <canvas id="bgCanvas"></canvas>
+  <div class="aurora-bg"></div>
+  <div class="grid-overlay"></div>
+
+  <!-- Scroll Progress Bar -->
+  <div class="scroll-progress-bar" id="scrollProgress"></div>
+
+  <!-- Preloader -->
+  <div class="preloader" id="preloader">
+    <div class="preloader-content">
+      <div class="preloader-logo">
+        <span class="logo-accent">&gt;_</span> SIMON JOSEPH K
+      </div>
+      <div class="terminal-loader" id="preloaderLog">
+        <p class="p-line">&gt; initializing mission control...</p>
+      </div>
+      <div class="preloader-bar-bg">
+        <div class="preloader-bar" id="preloaderBar"></div>
+      </div>
+      <div class="preloader-status">
+        <span id="preloaderPercent">0%</span>
+        <span class="status-online" id="preloaderStatus">INITIALIZING</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- Floating Glass Navbar -->
+  <header class="navbar-wrapper">
+    <nav class="navbar glass-panel" id="navbar">
+      <a href="#hero" class="nav-brand">
+        <span class="brand-symbol">⚡</span>
+        <span class="brand-text">Simon Joseph K</span>
+      </a>
+      <ul class="nav-links" id="navLinks">
+        <li><a href="#hero" class="nav-link active">Home</a></li>
+        <li><a href="#about" class="nav-link">About</a></li>
+        <li><a href="#skills" class="nav-link">Skills</a></li>
+        <li><a href="#experience" class="nav-link">Experience</a></li>
+        <li><a href="#project" class="nav-link">Projects</a></li>
+        <li><a href="#creations" class="nav-link">Creations</a></li>
+        <li><a href="#education" class="nav-link">Education</a></li>
+        <li><a href="#beyond-work" class="nav-link">Beyond Work</a></li>
+        <li><a href="#contact" class="nav-link">Contact</a></li>
+      </ul>
+      <div class="nav-actions">
+        <button class="cmd-palette-btn glass-btn" id="cmdPaletteBtn" title="Open Command Palette (Key: /)" aria-label="Open Command Palette">
+          <span class="cmd-icon">⌘</span><span class="cmd-key">K</span>
+        </button>
+        <button class="theme-toggle glass-btn" id="themeToggle" aria-label="Toggle Dark/Light Theme">
+          <span class="theme-icon" id="themeIcon">🌙</span>
+        </button>
+        <button class="mobile-toggle" id="mobileToggle" aria-label="Toggle Menu">
+          <span></span><span></span><span></span>
+        </button>
+
+        <a href="https://www.linkedin.com/in/simon-joseph-k-887528306" target="_blank" rel="noopener noreferrer" class="nav-link-btn" aria-label="LinkedIn">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><path d="M4.98 3.5C4.98 4.88 3.87 6 2.5 6S0 4.88 0 3.5 1.12 1 2.5 1s2.48 1.12 2.48 2.5zM.24 8h4.5v14H.24V8zM8 8h4.3v1.92h.06c.6-1.14 2.07-2.34 4.26-2.34 4.56 0 5.4 3 5.4 6.9V22h-4.5v-6.2c0-1.48 0-3.38-2.07-3.38s-2.39 1.61-2.39 3.27V22H8V8z"/></svg>
+        </a>
+      </div>
+    </nav>
+  </header>
+
+  <main>
+    <!-- 1. HERO SECTION -->
+    <section id="hero" class="hero-section">
+      <div class="container hero-container">
+        <div class="hero-content">
+          <div class="status-pill-wrapper">
+            <div class="status-pill glowing-border">
+              <span class="status-dot pulsing"></span>
+              <span class="status-text">Available for opportunities</span>
+              <span class="location-tag">📍 Bengaluru, IN</span>
+            </div>
+          </div>
+
+          <h1 class="hero-title">
+            Hi, I'm <span class="gradient-text">Simon Joseph K</span>
+          </h1>
+
+          <div class="typewriter-box">
+            <span class="terminal-prompt">$</span>
+            <span class="typewriter-text" id="typewriterText"></span>
+            <span class="cursor-blink">|</span>
+          </div>
+
+          <p class="hero-pitch">
+            I trace problems to the root cause and write them up so they don't come back.
+          </p>
+
+          <div class="hero-cta-group">
+            <a href="#project" class="btn btn-primary magnetic-btn">
+              <span>View My Work</span>
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+            </a>
+            <a href="./Simon_Joseph_K_Resume.pdf" target="_blank" download class="btn btn-glass magnetic-btn">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4M7 10l5 5 5-5M12 15V3"/></svg>
+              <span>Download Resume</span>
+            </a>
+            <a href="#contact" class="btn btn-outline magnetic-btn">
+              <span>Let's Talk</span>
+            </a>
+          </div>
+        </div>
+
+        <div class="hero-visual">
+          <div class="profile-avatar-wrapper">
+            <div class="glowing-ring"></div>
+            <div class="avatar-box glass-panel">
+              <div class="avatar-placeholder">
+                <span class="avatar-initials">SJK</span>
+                <span class="avatar-sub">L2 SUPPORT</span>
+              </div>
+            </div>
+          </div>
+
+          <!-- Live Ticket Floating Glass Card -->
+          <div class="live-ticket-card glass-panel tilt-card" id="heroTicketCard">
+            <div class="ticket-header">
+              <span class="ticket-id"><span class="pulse-icon">●</span> INC00-8492</span>
+              <span class="ticket-badge p2-badge">PRIORITY: P2</span>
+            </div>
+            <div class="ticket-body">
+              <div class="ticket-row">
+                <span class="t-label">SYSTEM:</span>
+                <span class="t-val">Okta SSO / Azure AD Sync</span>
+              </div>
+              <div class="ticket-row">
+                <span class="t-label">RESOLUTION:</span>
+                <span class="t-val emerald-text">Root Cause Resolved & KB Published</span>
+              </div>
+            </div>
+            <div class="ticket-footer">
+              <span class="status-chip resolved-chip">STATUS: RESOLVED</span>
+              <span class="sla-chip met-chip">SLA: MET ✓</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 2. LIVE STATS DASHBOARD -->
+    <section id="stats" class="stats-section">
+      <div class="container">
+        <div class="section-header">
+          <span class="section-tag">// TELEMETRY & KPIs</span>
+          <h2 class="section-title">Operations Metrics Dashboard</h2>
+        </div>
+
+        <div class="stats-grid">
+          <div class="stat-card glass-panel tilt-card">
+            <div class="stat-ring-box">
+              <svg class="radial-ring" viewBox="0 0 36 36">
+                <path class="ring-bg" d="M18 2.0845 a 15.9155 15.9155 0 0 1 0 31.831 a 15.9155 15.9155 0 0 1 0 -31.831" />
+                <path class="ring-fill ring-cyan" stroke-dasharray="98, 100" d="M18 2.0845 a 15.9155 15.9155 0 0 1 0 31.831 a 15.9155 15.9155 0 0 1 0 -31.831" />
+              </svg>
+              <div class="stat-number"><span class="counter" data-target="98" data-suffix="%">98</span>%</div>
+            </div>
+            <div class="stat-label">SLA Compliance</div>
+            <div class="stat-sub">Consistently delivered across IBM & Kyndryl accounts</div>
+          </div>
+
+          <div class="stat-card glass-panel tilt-card">
+            <div class="stat-ring-box">
+              <svg class="radial-ring" viewBox="0 0 36 36">
+                <path class="ring-bg" d="M18 2.0845 a 15.9155 15.9155 0 0 1 0 31.831 a 15.9155 15.9155 0 0 1 0 -31.831" />
+                <path class="ring-fill ring-violet" stroke-dasharray="30, 100" d="M18 2.0845 a 15.9155 15.9155 0 0 1 0 31.831 a 15.9155 15.9155 0 0 1 0 -31.831" />
+              </svg>
+              <div class="stat-number"><span class="counter" data-target="30" data-suffix="%">30</span>%</div>
+            </div>
+            <div class="stat-label">Downtime Reduction</div>
+            <div class="stat-sub">Achieved via proactive root cause analysis</div>
+          </div>
+
+          <div class="stat-card glass-panel tilt-card">
+            <div class="stat-badge-icon">📚</div>
+            <div class="stat-number"><span class="counter" data-target="40" data-suffix="+">40</span>+</div>
+            <div class="stat-label">KB Articles Written</div>
+            <div class="stat-sub">Empowered users and L1 teams to self-resolve</div>
+          </div>
+
+          <div class="stat-card glass-panel tilt-card">
+            <div class="stat-badge-icon">📉</div>
+            <div class="stat-number"><span class="counter" data-target="20">0</span>%</div>
+            <div class="stat-label">Fewer Repeat Incidents</div>
+            <div class="stat-sub">Direct result of published documentation</div>
+          </div>
+
+          <div class="stat-card glass-panel tilt-card">
+            <div class="stat-badge-icon">🚀</div>
+            <div class="stat-number"><span class="counter" data-target="50">0</span>+</div>
+            <div class="stat-label">Deployments Managed</div>
+            <div class="stat-sub">95% delivered strictly on-time</div>
+          </div>
+
+          <div class="stat-card glass-panel tilt-card">
+            <div class="stat-badge-icon">⚡</div>
+            <div class="stat-number"><span class="counter-range" data-min="25" data-max="35">25-35</span></div>
+            <div class="stat-label">Tickets Handled / Week</div>
+            <div class="stat-sub">High volume ServiceNow queue resolution</div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 3. ABOUT SECTION -->
+    <section id="about" class="about-section">
+      <div class="container about-container">
+        <div class="about-text reveal">
+          <span class="section-tag">// WHO I AM</span>
+          <h2 class="section-title">A support engineer who thinks like a system operator</h2>
+          <div class="about-body">
+            <p>Technical Support Engineer with close to two years of experience supporting enterprise clients at IBM and Kyndryl. I work incidents and service requests in ServiceNow, sort out user access and device problems across Okta, Azure and Intune, and keep tickets inside SLA.</p>
+            <p>I'm comfortable talking to clients directly, tracing a problem back to its cause, and writing it up so it doesn't come back. I'm a BCA graduate who also uses SQL, Excel and Power BI for ticket and SLA reporting.</p>
+            <div class="about-tags">
+              <span class="chip">Root Cause Analysis</span>
+              <span class="chip">SLA Discipline</span>
+              <span class="chip">Client Communication</span>
+              <span class="chip">Knowledge Base Writing</span>
+            </div>
+
+            <div class="what-i-bring">
+              <h3>What I bring</h3>
+              <p>Reliable at owning a ticket from first contact to confirmed resolution. I write up fixes so issues don't repeat, and I'm comfortable with both clients and technical teams.</p>
+            </div>
+
+            <a href="https://www.linkedin.com/in/simon-joseph-k-887528306" target="_blank" rel="noopener noreferrer" class="btn btn-primary about-linkedin">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M4.98 3.5C4.98 4.88 3.87 6 2.5 6S0 4.88 0 3.5 1.12 1 2.5 1s2.48 1.12 2.48 2.5zM.24 8h4.5v14H.24V8zM8 8h4.3v1.92h.06c.6-1.14 2.07-2.34 4.26-2.34 4.56 0 5.4 3 5.4 6.9V22h-4.5v-6.2c0-1.48 0-3.38-2.07-3.38s-2.39 1.61-2.39 3.27V22H8V8z"/></svg>
+              <span>Connect on LinkedIn</span>
+            </a>
+          </div>
+        </div>
+
+        <div class="quick-facts">
+          <div class="qf-card glass-panel tilt-card">
+            <span class="qf-icon">📍</span>
+            <span class="qf-text">Based in Bengaluru, Karnataka</span>
+          </div>
+          <div class="qf-card glass-panel tilt-card">
+            <span class="qf-icon">💼</span>
+            <span class="qf-text">Close to 2 years in enterprise technical support (IBM, Kyndryl)</span>
+          </div>
+          <div class="qf-card glass-panel tilt-card">
+            <span class="qf-icon">🎓</span>
+            <span class="qf-text">BCA graduate, 2024 (New Baldwins International Degree College)</span>
+          </div>
+          <div class="qf-card glass-panel tilt-card">
+            <span class="qf-icon">🗣️</span>
+            <span class="qf-text">5 languages: English, Kannada, Hindi, Malayalam, Tamil</span>
+          </div>
+          <div class="qf-card glass-panel tilt-card">
+            <span class="qf-icon">🛠️</span>
+            <span class="qf-text">Daily tools: ServiceNow, Okta, Azure / Entra ID, Intune, Microsoft 365</span>
+          </div>
+          <div class="qf-card glass-panel tilt-card">
+            <span class="qf-icon">📊</span>
+            <span class="qf-text">Reporting: Excel, Power BI, SQL (basics), Python (basics)</span>
+          </div>
+          <div class="qf-card glass-panel tilt-card">
+            <span class="qf-icon">🎯</span>
+            <span class="qf-text">Strengths: root cause analysis, clear client communication, KB writing, SLA discipline</span>
+          </div>
+          <div class="qf-card glass-panel tilt-card">
+            <span class="qf-icon">📬</span>
+            <span class="qf-text">Open to new opportunities in Technical Support / IT Service Desk / Identity & Access / Endpoint support roles</span>
+          </div>
+        </div>
+
+        <div class="about-terminal glass-panel tilt-card reveal">
+          <div class="term-header">
+            <span class="term-dots"><span></span><span></span><span></span></span>
+            <span class="term-title">simon@portfolio:~$</span>
+          </div>
+          <div class="term-body">
+            <p class="term-line"><span class="term-prompt">$</span> whoami → <span class="term-out">simon_joseph_k</span></p>
+            <p class="term-line"><span class="term-prompt">$</span> role → <span class="term-out">Technical Support Engineer</span></p>
+            <p class="term-line"><span class="term-prompt">$</span> location → <span class="term-out">Bengaluru, India</span></p>
+            <p class="term-line"><span class="term-prompt">$</span> languages → <span class="term-out">English, Kannada, Hindi, Malayalam, Tamil</span></p>
+            <p class="term-line"><span class="term-prompt">$</span> status → <span class="term-out emerald-text">open_to_work</span></p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 4. SKILLS SECTION -->
+    <section id="skills" class="skills-section">
+      <div class="container">
+        <div class="section-header">
+          <span class="section-tag">// TECHNICAL STACK</span>
+          <h2 class="section-title">Skills &amp; Proficiency</h2>
+        </div>
+
+        <div class="skills-filter" id="skillsFilter">
+          <button class="filter-btn active" data-filter="all">All</button>
+          <button class="filter-btn" data-filter="ticketing">Ticketing &amp; ITSM</button>
+          <button class="filter-btn" data-filter="identity">Identity &amp; Access</button>
+          <button class="filter-btn" data-filter="endpoint">Endpoint &amp; Cloud</button>
+          <button class="filter-btn" data-filter="support">Client Support</button>
+          <button class="filter-btn" data-filter="reporting">Reporting &amp; Scripting</button>
+        </div>
+
+        <div class="skills-grid" id="skillsGrid">
+          <div class="skill-card glass-panel tilt-card" data-cat="ticketing">
+            <div class="skill-head">
+              <span class="skill-icon">🎫</span>
+              <h3>Ticketing &amp; ITSM</h3>
+            </div>
+            <div class="skill-chips">
+              <span class="chip">ServiceNow</span>
+              <span class="chip">Incident Mgmt</span>
+              <span class="chip">SLA Monitoring</span>
+              <span class="chip">Escalation</span>
+              <span class="chip">Root Cause Analysis</span>
+            </div>
+            <div class="skill-bar"><div class="skill-fill" data-level="95"></div></div>
+          </div>
+
+          <div class="skill-card glass-panel tilt-card" data-cat="identity">
+            <div class="skill-head">
+              <span class="skill-icon">🔐</span>
+              <h3>Identity &amp; Access</h3>
+            </div>
+            <div class="skill-chips">
+              <span class="chip">Okta</span>
+              <span class="chip">Azure AD / Entra ID</span>
+              <span class="chip">SSO &amp; MFA</span>
+              <span class="chip">User &amp; Group Mgmt</span>
+              <span class="chip">License Mgmt</span>
+            </div>
+            <div class="skill-bar"><div class="skill-fill" data-level="90"></div></div>
+          </div>
+
+          <div class="skill-card glass-panel tilt-card" data-cat="endpoint">
+            <div class="skill-head">
+              <span class="skill-icon">🖥️</span>
+              <h3>Endpoint &amp; Cloud</h3>
+            </div>
+            <div class="skill-chips">
+              <span class="chip">Microsoft Intune</span>
+              <span class="chip">Microsoft Azure</span>
+              <span class="chip">Windows 10/11</span>
+              <span class="chip">Microsoft 365</span>
+              <span class="chip">App Deployment</span>
+            </div>
+            <div class="skill-bar"><div class="skill-fill" data-level="88"></div></div>
+          </div>
+
+          <div class="skill-card glass-panel tilt-card" data-cat="support">
+            <div class="skill-head">
+              <span class="skill-icon">🎧</span>
+              <h3>Client Support</h3>
+            </div>
+            <div class="skill-chips">
+              <span class="chip">L1/L2 Troubleshooting</span>
+              <span class="chip">Remote Support</span>
+              <span class="chip">Client Communication</span>
+              <span class="chip">Ticket Documentation</span>
+              <span class="chip">Knowledge Base Writing</span>
+            </div>
+            <div class="skill-bar"><div class="skill-fill" data-level="92"></div></div>
+          </div>
+
+          <div class="skill-card glass-panel tilt-card" data-cat="reporting">
+            <div class="skill-head">
+              <span class="skill-icon">📊</span>
+              <h3>Reporting &amp; Scripting</h3>
+            </div>
+            <div class="skill-chips">
+              <span class="chip">Excel</span>
+              <span class="chip">Power BI</span>
+              <span class="chip">SQL</span>
+              <span class="chip">Python</span>
+              <span class="chip">Power Query</span>
+            </div>
+            <div class="skill-bar"><div class="skill-fill" data-level="80"></div></div>
+          </div>
+
+          <div class="skill-card glass-panel tilt-card" data-cat="ticketing">
+            <div class="skill-head">
+              <span class="skill-icon">🧰</span>
+              <h3>Other Tools</h3>
+            </div>
+            <div class="skill-chips">
+              <span class="chip">SAP S/4HANA</span>
+              <span class="chip">MS Office</span>
+              <span class="chip">AutoCAD</span>
+              <span class="chip">Power BI</span>
+            </div>
+            <div class="skill-bar"><div class="skill-fill" data-level="75"></div></div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 5. EXPERIENCE SECTION -->
+    <section id="experience" class="experience-section">
+      <div class="container">
+        <div class="section-header">
+          <span class="section-tag">// INCIDENT HISTORY</span>
+          <h2 class="section-title">Experience &amp; Incident Records</h2>
+        </div>
+
+        <div class="timeline">
+          <div class="timeline-line"></div>
+
+          <div class="exp-card glass-panel tilt-card reveal" data-org="kyndryl">
+            <div class="exp-marker"><span class="marker-dot red"></span></div>
+            <div class="exp-header">
+              <div class="exp-top">
+                <div>
+                  <h3 class="exp-role">Senior Customer Service Associate</h3>
+                  <div class="exp-org"><span class="org-tag">K</span> Kyndryl</div>
+                </div>
+                <span class="exp-date">06/2026 – Present</span>
+              </div>
+              <button class="exp-toggle" aria-label="Expand incident record">
+                <span class="toggle-icon">+</span>
+              </button>
+            </div>
+            <div class="exp-fields">
+              <div class="field-row"><span class="field-key">ROLE</span><span class="field-val">Senior Customer Service Associate</span></div>
+              <div class="field-row"><span class="field-key">ORG</span><span class="field-val">Kyndryl</span></div>
+              <div class="field-row"><span class="field-key">DURATION</span><span class="field-val">06/2026 – Present</span></div>
+              <div class="field-row"><span class="field-key">RESOLUTION</span><span class="field-val">L1 SLA compliance, identity &amp; endpoint support</span></div>
+            </div>
+            <div class="exp-details">
+              <ul>
+                <li>Handle client queries and service requests in ServiceNow, and close them within SLA targets.</li>
+                <li>Fix login, MFA and SSO problems in Okta and Azure, and app or device issues on Intune-managed laptops. Escalate to L2/L3 with clear notes when the fix is beyond L1.</li>
+                <li>Log each incident with what was tried and how it was resolved, so nobody has to ask the client the same thing twice.</li>
+                <li>Make ticket and SLA reports in Excel and Power BI, and use SQL and Python (basics) to cut down repeat manual work.</li>
+              </ul>
+            </div>
+          </div>
+
+          <div class="exp-card glass-panel tilt-card reveal" data-org="ibm">
+            <div class="exp-marker"><span class="marker-dot blue"></span></div>
+            <div class="exp-header">
+              <div class="exp-top">
+                <div>
+                  <h3 class="exp-role">Technical Support Engineer (IBM Client Account)</h3>
+                  <div class="exp-org"><span class="org-tag">I</span> IBM</div>
+                </div>
+                <span class="exp-date">02/2025 – 05/2026</span>
+              </div>
+              <button class="exp-toggle" aria-label="Expand incident record">
+                <span class="toggle-icon">+</span>
+              </button>
+            </div>
+            <div class="exp-fields">
+              <div class="field-row"><span class="field-key">ROLE</span><span class="field-val">Technical Support Engineer (IBM Client Account)</span></div>
+              <div class="field-row"><span class="field-key">ORG</span><span class="field-val">IBM</span></div>
+              <div class="field-row"><span class="field-key">DURATION</span><span class="field-val">02/2025 – 05/2026</span></div>
+              <div class="field-row"><span class="field-key">RESOLUTION</span><span class="field-val">98% SLA compliance, 30% downtime reduction</span></div>
+            </div>
+            <div class="exp-details">
+              <ul>
+                <li>Supported an IBM client account, handling 25-35 tickets a week in ServiceNow. SLA compliance held at 98%.</li>
+                <li>Worked directly with client users and their IT teams over calls and email to understand the issue, fix it and confirm it was resolved.</li>
+                <li>Handled access, endpoint and software requests using Okta, Azure and Intune, and kept ticket records accurate so reports could be trusted.</li>
+                <li>Went through recurring incidents and system performance data to find root causes. The fixes helped reduce downtime by 30%.</li>
+                <li>Wrote 40+ knowledge base articles that cut repeat incidents by 20%.</li>
+                <li>Supported 50+ software deployments with 95% delivered on time, coordinating across several teams.</li>
+                <li>Prepared ticket and SLA reports in Excel and Power BI, and used SQL and Python (basics) to automate routine reporting.</li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 6. FEATURED PROJECT -->
+    <section id="project" class="project-section">
+      <div class="container">
+        <div class="section-header">
+          <span class="section-tag">// PERSONAL LAB</span>
+          <h2 class="section-title">Featured Project: Sales Performance Analysis Dashboard</h2>
+          <p class="section-sub">Personal project · SQL · Excel · Power BI</p>
+        </div>
+
+        <div class="project-grid">
+          <div class="project-card glass-panel tilt-card reveal">
+            <div class="project-header">
+              <span class="project-tag">Personal Project</span>
+              <span class="project-emoji">📊</span>
+            </div>
+            <h3>Sales Performance Analysis Dashboard</h3>
+            <div class="project-badges">
+              <span class="badge">SQL</span>
+              <span class="badge">Excel</span>
+              <span class="badge">Power BI</span>
+            </div>
+            <ul class="project-list">
+              <li>Queried and analyzed 50,000+ sales records in SQL, and cleaned the data in Excel with Pivot Tables, XLOOKUP and Power Query.</li>
+              <li>Built an interactive Power BI dashboard covering revenue growth, product performance and regional sales.</li>
+              <li>Found a 12% seasonal revenue rise in Q4 and recommended better inventory planning. Manual reporting effort fell by 30%.</li>
+            </ul>
+          </div>
+
+          <div class="project-card glass-panel tilt-card reveal">
+            <div class="project-header">
+              <span class="project-tag">Personal Project</span>
+              <span class="project-emoji">💻</span>
+            </div>
+            <h3>Personal Portfolio Website</h3>
+            <div class="project-badges">
+              <span class="badge">HTML</span>
+              <span class="badge">CSS</span>
+              <span class="badge">JavaScript</span>
+            </div>
+            <ul class="project-list">
+              <li>Designed and built this responsive portfolio from scratch as a "mission control for IT support" experience using vanilla HTML, CSS and JavaScript.</li>
+              <li>Includes animated particle background, command palette, terminal, dark/light theme and a mobile-friendly layout.</li>
+              <li>Deployable on GitHub Pages with no frameworks or build tools.</li>
+            </ul>
+            <div class="you-are-here">
+              <span class="you-are-here-badge">📍 You are here</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 7. MY WEB CREATIONS -->
+    <section id="creations" class="creations-section">
+      <div class="container">
+        <div class="section-header">
+          <span class="section-tag">// WEB CREATIONS</span>
+          <h2 class="section-title">My Web Creations</h2>
+        </div>
+        <p class="creations-intro">Websites I've designed and built. Click any card to visit.</p>
+        <div class="creations-grid" id="creationsGrid" aria-live="polite">
+          <!-- Cards rendered from window.CREATIONS in script.js -->
+        </div>
+      </div>
+    </section>
+
+    <!-- 8. EDUCATION & CERTIFICATIONS -->
+    <section id="education" class="edu-section">
+      <div class="container">
+        <div class="section-header">
+          <span class="section-tag">// CREDENTIALS</span>
+          <h2 class="section-title">Education &amp; Certifications</h2>
+        </div>
+
+        <div class="edu-grid">
+          <div class="edu-card glass-panel tilt-card reveal">
+            <div class="edu-badge-icon">🎓</div>
+            <h3>Bachelor of Computer Applications (BCA)</h3>
+            <div class="edu-org">New Baldwins International Degree College, Bengaluru</div>
+            <div class="edu-meta"><span class="edu-year">2024</span><span class="edu-score">82%</span></div>
+          </div>
+          <div class="edu-card glass-panel tilt-card reveal">
+            <div class="edu-badge-icon">📜</div>
+            <h3>Higher Secondary Certificate (HSC)</h3>
+            <div class="edu-org">Shastry Mahesh PU College, Bengaluru</div>
+            <div class="edu-meta"><span class="edu-year">2021</span><span class="edu-score">73%</span></div>
+          </div>
+          <div class="edu-card glass-panel tilt-card reveal">
+            <div class="edu-badge-icon">📖</div>
+            <h3>Secondary School Certificate (SSC)</h3>
+            <div class="edu-org">Jubilee English High School, Bengaluru</div>
+            <div class="edu-meta"><span class="edu-year">2019</span><span class="edu-score">79%</span></div>
+          </div>
+        </div>
+
+        <div class="certs-grid">
+          <div class="cert-card glass-panel tilt-card glowing-border reveal">
+            <div class="cert-icon">📈</div>
+            <h4>Google Data Analytics Professional Certificate</h4>
+            <span class="cert-source">Coursera</span>
+          </div>
+          <div class="cert-card glass-panel tilt-card glowing-border reveal">
+            <div class="cert-icon">🛡️</div>
+            <h4>Google Cyber Security Certification</h4>
+            <span class="cert-source">Google</span>
+          </div>
+          <div class="cert-card glass-panel tilt-card glowing-border reveal">
+            <div class="cert-icon">📊</div>
+            <h4>Power BI Crash Course</h4>
+            <span class="cert-source">Microsoft</span>
+          </div>
+          <div class="cert-card glass-panel tilt-card glowing-border reveal">
+            <div class="cert-icon">🐍</div>
+            <h4>Basic Python</h4>
+            <span class="cert-source">Self-paced</span>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 8. LANGUAGES -->
+    <section id="languages" class="languages-section">
+      <div class="container">
+        <div class="section-header">
+          <span class="section-tag">// COMMUNICATION</span>
+          <h2 class="section-title">Languages</h2>
+        </div>
+        <div class="lang-grid">
+          <div class="lang-card glass-panel reveal">
+            <div class="lang-name">English</div>
+            <div class="lang-levels">
+              <span class="lang-bar" style="--w:95%"></span>
+              <span class="lang-tag">Read · Write · Speak</span>
+            </div>
+          </div>
+          <div class="lang-card glass-panel reveal">
+            <div class="lang-name">Kannada</div>
+            <div class="lang-levels">
+              <span class="lang-bar" style="--w:90%"></span>
+              <span class="lang-tag">Read · Write · Speak</span>
+            </div>
+          </div>
+          <div class="lang-card glass-panel reveal">
+            <div class="lang-name">Hindi</div>
+            <div class="lang-levels">
+              <span class="lang-bar" style="--w:85%"></span>
+              <span class="lang-tag">Read · Write · Speak</span>
+            </div>
+          </div>
+          <div class="lang-card glass-panel reveal">
+            <div class="lang-name">Malayalam</div>
+            <div class="lang-levels">
+              <span class="lang-bar" style="--w:60%"></span>
+              <span class="lang-tag">Speak</span>
+            </div>
+          </div>
+          <div class="lang-card glass-panel reveal">
+            <div class="lang-name">Tamil</div>
+            <div class="lang-levels">
+              <span class="lang-bar" style="--w:55%"></span>
+              <span class="lang-tag">Speak</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 8. BEYOND WORK -->
+    <section id="beyond-work" class="beyond-work-section">
+      <div class="container">
+        <div class="section-header">
+          <span class="section-tag">// BEYOND WORK</span>
+          <div class="music-staff" id="musicStaff" aria-hidden="true">
+            <span class="staff-clef">𝄞</span>
+            <span class="staff-line"></span><span class="staff-line"></span><span class="staff-line"></span><span class="staff-line"></span><span class="staff-line"></span>
+            <span class="staff-note">♪</span><span class="staff-note">♫</span>
+          </div>
+          <h2 class="section-title">Beyond Work</h2>
+          <p class="section-sub">When I'm not resolving tickets, I'm making music, building webpages and exploring new places.</p>
+        </div>
+
+        <div class="bw-tabs" id="bwTabs" role="tablist">
+            <button class="bw-tab active" data-tab="music">Music</button>
+            <button class="bw-tab" data-tab="web">Web</button>
+            <button class="bw-tab" data-tab="travel">Travel</button>
+          </div>
+
+          <div class="hobbies-grid">
+          <!-- Music -->
+          <div class="bw-tabs-panel active" data-panel="music">
+          <div class="hobby-card glass-panel tilt-card reveal" id="musicCard">
+            <div class="card-title-row">
+              <span class="hobby-emoji">🎵</span>
+              <h3>Musical Instruments</h3>
+            </div>
+            <p class="card-desc">Learning and playing instruments.</p>
+            <div class="equalizer" id="equalizer">
+              <span></span><span></span><span></span><span></span><span></span>
+            </div>
+            <div class="music-notes" aria-hidden="true">
+              <span class="note">♪</span><span class="note">♫</span><span class="note">♩</span>
+            </div>
+            <div class="drum-kit" id="drumKit">
+              <svg id="drumSvg" viewBox="0 0 320 100" preserveAspectRatio="xMidYMid meet" role="group" aria-label="Drum kit - click or press keys to play">
+                  <g class="drum-piece" data-drum="crash" data-sound="crash" tabindex="0" role="button" aria-label="Crash cymbal">
+                    <rect class="hit-area" x="20" y="5" width="50" height="40" fill="transparent"/>
+                    <circle cx="45" cy="25" r="20" fill="rgba(245,158,11,0.12)" stroke="#f59e0b" stroke-width="2"/>
+                    <circle cx="45" cy="25" r="6" fill="#f59e0b"/>
+                  </g>
+                  <g class="drum-piece" data-drum="ride" data-sound="ride" tabindex="0" role="button" aria-label="Ride cymbal">
+                    <rect class="hit-area" x="225" y="5" width="50" height="40" fill="transparent"/>
+                    <circle cx="250" cy="25" r="22" fill="rgba(245,158,11,0.12)" stroke="#f59e0b" stroke-width="2"/>
+                    <circle cx="250" cy="25" r="5" fill="#f59e0b"/>
+                  </g>
+                  <g class="drum-piece" data-drum="hihat" data-sound="hihat" tabindex="0" role="button" aria-label="Hi-hat">
+                    <rect class="hit-area" x="25" y="45" width="50" height="35" fill="transparent"/>
+                    <ellipse cx="50" cy="60" rx="24" ry="8" fill="rgba(139,92,246,0.15)" stroke="#8b5cf6" stroke-width="2"/>
+                    <ellipse cx="50" cy="57" rx="22" ry="6" fill="rgba(139,92,246,0.25)" stroke="#8b5cf6" stroke-width="1.5"/>
+                    <line x1="50" y1="48" x2="50" y2="42" stroke="#8b5cf6" stroke-width="2"/>
+                  </g>
+                  <g class="drum-piece" data-drum="tom1" data-sound="tom1" tabindex="0" role="button" aria-label="High tom">
+                    <rect class="hit-area" x="85" y="28" width="40" height="32" fill="transparent"/>
+                    <ellipse cx="105" cy="45" rx="22" ry="14" fill="rgba(16,185,129,0.15)" stroke="#10b981" stroke-width="2"/>
+                  </g>
+                  <g class="drum-piece" data-drum="tom2" data-sound="tom2" tabindex="0" role="button" aria-label="Mid tom">
+                    <rect class="hit-area" x="145" y="22" width="40" height="32" fill="transparent"/>
+                    <ellipse cx="165" cy="40" rx="20" ry="13" fill="rgba(16,185,129,0.15)" stroke="#10b981" stroke-width="2"/>
+                  </g>
+                  <g class="drum-piece" data-drum="snare" data-sound="snare" tabindex="0" role="button" aria-label="Snare drum">
+                    <rect class="hit-area" x="95" y="48" width="50" height="30" fill="transparent"/>
+                    <ellipse cx="120" cy="63" rx="28" ry="16" fill="rgba(34,211,238,0.1)" stroke="#22d3ee" stroke-width="2"/>
+                    <ellipse cx="120" cy="63" rx="20" ry="11" fill="rgba(34,211,238,0.2)" stroke="#22d3ee" stroke-width="1"/>
+                  </g>
+                  <g class="drum-piece" data-drum="kick" data-sound="kick" tabindex="0" role="button" aria-label="Kick drum">
+                    <rect class="hit-area" x="105" y="62" width="50" height="36" fill="transparent"/>
+                    <ellipse cx="130" cy="80" rx="32" ry="22" fill="none" stroke="#f5b942" stroke-width="2.5"/>
+                    <ellipse cx="130" cy="80" rx="24" ry="16" fill="rgba(245,185,66,0.15)" stroke="#f5b942" stroke-width="1"/>
+                  </g>
+                  <g class="drum-piece" data-drum="floor" data-sound="floor" tabindex="0" role="button" aria-label="Floor tom">
+                    <rect class="hit-area" x="200" y="52" width="44" height="36" fill="transparent"/>
+                    <ellipse cx="222" cy="70" rx="22" ry="15" fill="rgba(16,185,129,0.15)" stroke="#10b981" stroke-width="2"/>
+                  </g>
+                </svg>
+                <div class="drum-waveform" id="drumWaveform" aria-hidden="true"></div>
+                <div class="piano-hint" id="drumHint">Tap the drums 🥁</div>
+              </div>
+          </div>
+          </div>
+
+          <!-- Webpages -->
+          <div class="bw-tabs-panel" data-panel="web">
+          <div class="hobby-card glass-panel tilt-card reveal" id="webCard">
+            <div class="card-title-row">
+              <span class="hobby-emoji">💻</span>
+              <h3>Creating Webpages</h3>
+            </div>
+            <p class="card-desc">Building and designing webpages.</p>
+            <div class="web-scene" id="webScene" aria-hidden="true">
+              <div class="web-workspace">
+                <div class="web-browser">
+                  <div class="browser-bar">
+                    <span class="browser-dots"><span class="bdot"></span><span class="bdot"></span><span class="bdot"></span></span>
+                    <span class="browser-url">simonjosephk7.github.io</span>
+                  </div>
+                  <div class="browser-preview" id="browserPreview"></div>
+                </div>
+                <div class="web-editor">
+                  <div class="editor-header">
+                    <span class="editor-dots"><span class="edot"></span><span class="edot"></span><span class="edot"></span></span>
+                    <span class="editor-filename">app.js</span>
+                  </div>
+                  <div class="editor-body" id="editorBody"></div>
+                </div>
+                <svg class="web-floaters" viewBox="0 0 100 100" preserveAspectRatio="xMidYMid meet" aria-hidden="true">
+                  <g transform="translate(4,4)"><g class="floater" style="animation-delay:0s;"><text x="0" y="9" font-size="9" font-family="JetBrains Mono, monospace" fill="#22d3ee" font-weight="700">&lt;/&gt;</text></g></g>
+                  <g transform="translate(76,12)"><g class="floater" style="animation-delay:1.2s;"><text x="0" y="9" font-size="10" font-family="JetBrains Mono, monospace" fill="#f59e0b" font-weight="700">{ }</text></g></g>
+                  <g transform="translate(6,82)"><g class="floater" style="animation-delay:2.4s;"><text x="0" y="10" font-size="11" font-family="JetBrains Mono, monospace" fill="#8b5cf6" font-weight="700">#</text></g></g>
+                  <g transform="translate(74,78)"><g class="floater" style="animation-delay:0.6s;"><text x="0" y="9" font-size="8" font-family="JetBrains Mono, monospace" fill="#10b981" font-weight="700">JS</text></g></g>
+                  <g transform="translate(44,2)"><g class="floater" style="animation-delay:3s;"><text x="0" y="9" font-size="10" fill="#e6edf3">↗</text></g></g>
+                </svg>
+              </div>
+            </div>
+          </div>
+          </div>
+
+          <!-- Travel -->
+          <div class="bw-tabs-panel" data-panel="travel">
+          <div class="hobby-card glass-panel tilt-card reveal" id="travelCard">
+            <div class="card-title-row">
+              <span class="hobby-emoji">🧭</span>
+              <h3>Exploring Places</h3>
+            </div>
+            <p class="card-desc">Love exploring new places and travelling.</p>
+
+            <div class="places-scene" id="travelScene" aria-hidden="true">
+              <div class="ps-sky">
+                <div class="ps-celestial" id="tsCelestial"></div>
+                <div class="ps-stars" id="tsStars"></div>
+              </div>
+              <div class="ps-route-wrap">
+                <svg class="ps-route" viewBox="0 0 300 110" preserveAspectRatio="none"><path id="tsPlanePath" d="M20,95 Q80,30 160,60 T300,25" fill="none" stroke="rgba(255,255,255,0.25)" stroke-dasharray="4 6"/></svg>
+                <div class="ps-plane" id="tsPlane">✈️</div>
+              </div>
+              <div class="ps-mountain m1"><svg viewBox="0 0 200 60" preserveAspectRatio="none"><path d="M0,60 L40,20 L70,40 L110,10 L150,35 L180,15 L200,30 L200,60 Z" fill="rgba(139,92,246,0.55)"/></svg></div>
+              <div class="ps-mountain m2"><svg viewBox="0 0 200 60" preserveAspectRatio="none"><path d="M0,60 L30,35 L65,48 L100,25 L135,42 L170,30 L200,40 L200,60 Z" fill="rgba(34,211,238,0.40)"/></svg></div>
+              <div class="ps-mountain m3"><svg viewBox="0 0 200 60" preserveAspectRatio="none"><path d="M0,60 L20,48 L50,52 L80,44 L110,50 L140,46 L170,50 L200,48 L200,60 Z" fill="rgba(16,185,129,0.30)"/></svg></div>
+              <div class="ps-tree ps-t1">🌲</div>
+              <div class="ps-tree ps-t2">🌲</div>
+              <div class="ps-tree ps-t3">🌲</div>
+              <div class="ps-tree ps-t4">🌴</div>
+              <div class="ps-balloon" id="tsBalloon">
+                <svg width="26" height="34" viewBox="0 0 34 44"><defs><linearGradient id="balloonGrad" x1="0" y1="0" x2="0" y2="1"><stop offset="0%" stop-color="#f59e0b"/><stop offset="100%" stop-color="#f43f5e"/></linearGradient></defs><ellipse cx="17" cy="17" rx="13" ry="14" fill="url(#balloonGrad)"/><rect x="15.5" y="30" width="3" height="8" fill="rgba(255,255,255,0.5)"/><path d="M14 38 Q17 44 20 38" stroke="#fff" stroke-width="1.5" fill="none"/></svg>
+                <div class="ps-basket"></div>
+              </div>
+              <div class="ps-clouds-drift"><span class="ps-cloud">☁</span><span class="ps-cloud">☁</span><span class="ps-cloud">☁</span></div>
+              <div class="ps-compass" id="compass">
+                <div class="compass-ring"></div>
+                <div class="compass-needle" id="compassNeedle"></div>
+                <div class="compass-labels"><span class="cl-n">N</span><span class="cl-e">E</span><span class="cl-s">S</span><span class="cl-w">W</span></div>
+              </div>
+              <div class="ps-passport" id="passportBadge">
+                <div class="passport-stamp"><div class="passport-icon">🛂</div><div class="passport-text">Explorer</div></div>
+              </div>
+              <div class="ps-captions" id="psCaptions"></div>
+            </div>
+
+            <div class="places-chips" id="placesChips">
+              <button class="place-chip" data-place="mountains">🏔️ Mountains</button>
+              <button class="place-chip" data-place="beaches">🏖️ Beaches</button>
+              <button class="place-chip" data-place="forests">🌲 Forests</button>
+              <button class="place-chip" data-place="cities">🏙️ Cities</button>
+              <button class="place-chip" data-place="heritage">🛕 Heritage</button>
+            </div>
+            <div class="place-note" id="placeNote" aria-live="polite"></div>
+          </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 9. CONTACT -->
+    <section id="contact" class="contact-section">
+      <div class="container">
+        <div class="section-header">
+          <span class="section-tag">// OPEN INCIDENT</span>
+          <h2 class="section-title">Let's solve something together.</h2>
+          <p class="section-sub">Have a problem worth raising? Open a ticket below.</p>
+        </div>
+
+        <div class="contact-grid">
+          <div class="contact-cards">
+            <a href="mailto:simonjoseph.sk@gmail.com" class="contact-card glass-panel tilt-card">
+              <div class="contact-icon">✉️</div>
+              <div class="contact-info">
+                <span class="contact-label">Email</span>
+                <span class="contact-val">simonjoseph.sk@gmail.com</span>
+              </div>
+            </a>
+            <a href="tel:+918618709741" class="contact-card glass-panel tilt-card">
+              <div class="contact-icon">📞</div>
+              <div class="contact-info">
+                <span class="contact-label">Phone</span>
+                <span class="contact-val">+91 8618709741</span>
+              </div>
+            </a>
+            <a href="https://www.linkedin.com/in/simon-joseph-k-887528306" target="_blank" rel="noopener noreferrer" class="contact-card glass-panel tilt-card">
+              <div class="contact-icon">💼</div>
+              <div class="contact-info">
+                <span class="contact-label">LinkedIn</span>
+                <span class="contact-val">simon-joseph-k-887528306</span>
+              </div>
+            </a>
+            <div class="contact-card glass-panel tilt-card">
+              <div class="contact-icon">📍</div>
+              <div class="contact-info">
+                <span class="contact-label">Location</span>
+                <span class="contact-val">Bengaluru, Karnataka</span>
+              </div>
+            </div>
+          </div>
+
+          <div class="composer glass-panel tilt-card" id="emailComposer">
+            <div class="composer-header">
+              <span class="composer-dots"><span></span><span></span><span></span></span>
+              <span class="composer-title">New Message</span>
+            </div>
+            <div class="composer-body">
+              <div class="composer-row">
+                <span class="composer-label">To:</span>
+                <span class="composer-to-chip">
+                  simonjoseph.sk@gmail.com
+                  <button class="copy-btn" id="copyEmailBtn" title="Copy email address">📋</button>
+                </span>
+                <span class="copy-confirm" id="copyConfirm" style="display:none">Copied ✓</span>
+              </div>
+              <div class="composer-field">
+                <input type="text" id="eName" placeholder="Your name" required>
+              </div>
+              <div class="composer-field">
+                <input type="email" id="eEmail" placeholder="your.email@example.com" required>
+              </div>
+              <div class="composer-field">
+                <input type="text" id="eSubject" placeholder="Subject">
+              </div>
+              <div class="composer-field">
+                <textarea id="eMessage" rows="5" placeholder="Write your message..." required></textarea>
+              </div>
+              <div class="composer-actions">
+                <button type="button" class="btn btn-primary" id="sendEmailBtn">
+                  <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 2 11 13M22 2l-7 20-4-9-9-4 20-7z"/></svg>
+                  <span>Send Email</span>
+                </button>
+                <button type="button" class="btn btn-glass" id="openGmailBtn">
+                  <span>Open in Gmail</span>
+                </button>
+              </div>
+              <div class="composer-error" id="composerError" style="display:none"></div>
+              <div class="composer-success" id="composerSuccess" style="display:none">
+                Opening your email app. If nothing opens, use the Gmail button or copy my address.
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <!-- Footer -->
+  <footer class="footer">
+    <div class="container footer-inner">
+      <div class="footer-brand">
+        <span class="brand-symbol">⚡</span>
+        <span class="brand-text">Simon Joseph K</span>
+        <p class="footer-tag">Mission Control for IT Support</p>
+      </div>
+      <div class="footer-links">
+        <a href="#hero">Terminal</a>
+        <a href="#stats">Metrics</a>
+        <a href="#skills">Stack</a>
+        <a href="#experience">Incidents</a>
+        <a href="#contact">Raise Ticket</a>
+      </div>
+      <div class="footer-copyright">© 2026 Simon Joseph K. All rights reserved.</div>
+    </div>
+    <button class="back-to-top" id="backToTop" aria-label="Back to top">↑</button>
+  </footer>
+
+  <!-- Simon's Buddy Floating Terminal -->
+  <div class="footer-terminal glass-panel" id="footerTerminal">
+    <div class="ft-header">
+      <span class="ft-dots"><span></span><span></span><span></span></span>
+      <div class="ft-title-row">
+        <div class="buddy-avatar" id="ftBuddyAvatar" aria-hidden="true">
+          <span class="buddy-face">
+            <span class="buddy-eye"></span><span class="buddy-eye"></span>
+            <span class="buddy-mouth">_^_</span>
+          </span>
+        </div>
+        <span class="ft-title">Simon's Buddy</span>
+      </div>
+      <button class="ft-close" id="ftClose" aria-label="Close terminal">×</button>
+    </div>
+    <div class="ft-body" id="ftBody">
+      <div class="buddy-body" id="buddyBody"></div>
+      <div class="buddy-quick" id="buddyQuick"></div>
+      <div class="buddy-input-row" id="buddyInputRow">
+        <span class="ft-prompt">$</span>
+        <input type="text" id="buddyInput" autocomplete="off" autocapitalize="sentences" enterkeyhint="send" aria-label="Message Simon's Buddy" placeholder="Ask me anything about Simon…">
+        <button type="button" class="buddy-send" id="buddySend" aria-label="Send message">➤</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Command Palette -->
+  <div class="cmd-palette" id="cmdPalette" role="dialog" aria-modal="true" aria-label="Command palette">
+    <div class="cmd-overlay" id="cmdOverlay"></div>
+    <div class="cmd-box">
+      <div class="cmd-search">
+        <span class="cmd-icon">⌘</span>
+        <input type="text" id="cmdInput" placeholder="Search commands..." autocomplete="off" aria-label="Search commands">
+        <span class="cmd-hint">↑↓ navigate · enter select · esc close</span>
+      </div>
+      <ul class="cmd-list" id="cmdList"></ul>
+    </div>
+  </div>
+
+  <!-- Confetti Canvas -->
+  <canvas id="confettiCanvas" class="confetti-canvas"></canvas>
+
+  <script src="creations-data.js" defer></script>
+  <script src="script.js" defer></script>
+</body>
+</html>
