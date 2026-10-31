@@ -2,7 +2,7 @@
 <html lang="en" data-theme="dark">
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
   <title>Simon Joseph K | Technical Support Engineer & IT Operations Specialist</title>
   <meta name="description" content="Portfolio of Simon Joseph K, Technical Support Engineer based in Bengaluru. Incident resolution, ITSM, ServiceNow, Identity & Access (Okta/Azure AD), Intune, and Data Analytics.">
   <meta name="keywords" content="Technical Support Engineer, ServiceNow, Okta, Azure AD, Intune, ITIL, Bengaluru, Simon Joseph K">
@@ -17,7 +17,7 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500;600;700&family=Space+Grotesk:wght@500;600;700&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="style.css">
+  <link rel="stylesheet" href="style.css?v=2">
 </head>
 <body>
   <!-- Custom Glow Cursor -->
@@ -677,9 +677,9 @@
         </div>
 
         <div class="bw-tabs" id="bwTabs" role="tablist">
-            <button class="bw-tab active" data-tab="music">Music</button>
-            <button class="bw-tab" data-tab="web">Web</button>
-            <button class="bw-tab" data-tab="travel">Travel</button>
+            <button class="bw-tab active" data-tab="music" aria-selected="true"><span class="tab-emoji">🥁</span> Music</button>
+            <button class="bw-tab" data-tab="web" aria-selected="false"><span class="tab-emoji">💻</span> Web</button>
+            <button class="bw-tab" data-tab="travel" aria-selected="false"><span class="tab-emoji">🧭</span> Travel</button>
           </div>
 
           <div class="hobbies-grid">
@@ -700,46 +700,47 @@
             <div class="drum-kit" id="drumKit">
               <svg id="drumSvg" viewBox="0 0 320 100" preserveAspectRatio="xMidYMid meet" role="group" aria-label="Drum kit - click or press keys to play">
                   <g class="drum-piece" data-drum="crash" data-sound="crash" tabindex="0" role="button" aria-label="Crash cymbal">
-                    <rect class="hit-area" x="20" y="5" width="50" height="40" fill="transparent"/>
+                    <rect class="hit-area" x="10" y="0" width="70" height="50" fill="transparent"/>
                     <circle cx="45" cy="25" r="20" fill="rgba(245,158,11,0.12)" stroke="#f59e0b" stroke-width="2"/>
                     <circle cx="45" cy="25" r="6" fill="#f59e0b"/>
                   </g>
                   <g class="drum-piece" data-drum="ride" data-sound="ride" tabindex="0" role="button" aria-label="Ride cymbal">
-                    <rect class="hit-area" x="225" y="5" width="50" height="40" fill="transparent"/>
+                    <rect class="hit-area" x="215" y="0" width="70" height="50" fill="transparent"/>
                     <circle cx="250" cy="25" r="22" fill="rgba(245,158,11,0.12)" stroke="#f59e0b" stroke-width="2"/>
                     <circle cx="250" cy="25" r="5" fill="#f59e0b"/>
                   </g>
                   <g class="drum-piece" data-drum="hihat" data-sound="hihat" tabindex="0" role="button" aria-label="Hi-hat">
-                    <rect class="hit-area" x="25" y="45" width="50" height="35" fill="transparent"/>
+                    <rect class="hit-area" x="15" y="40" width="60" height="42" fill="transparent"/>
                     <ellipse cx="50" cy="60" rx="24" ry="8" fill="rgba(139,92,246,0.15)" stroke="#8b5cf6" stroke-width="2"/>
                     <ellipse cx="50" cy="57" rx="22" ry="6" fill="rgba(139,92,246,0.25)" stroke="#8b5cf6" stroke-width="1.5"/>
                     <line x1="50" y1="48" x2="50" y2="42" stroke="#8b5cf6" stroke-width="2"/>
                   </g>
                   <g class="drum-piece" data-drum="tom1" data-sound="tom1" tabindex="0" role="button" aria-label="High tom">
-                    <rect class="hit-area" x="85" y="28" width="40" height="32" fill="transparent"/>
+                    <rect class="hit-area" x="75" y="22" width="55" height="40" fill="transparent"/>
                     <ellipse cx="105" cy="45" rx="22" ry="14" fill="rgba(16,185,129,0.15)" stroke="#10b981" stroke-width="2"/>
                   </g>
                   <g class="drum-piece" data-drum="tom2" data-sound="tom2" tabindex="0" role="button" aria-label="Mid tom">
-                    <rect class="hit-area" x="145" y="22" width="40" height="32" fill="transparent"/>
+                    <rect class="hit-area" x="135" y="16" width="55" height="40" fill="transparent"/>
                     <ellipse cx="165" cy="40" rx="20" ry="13" fill="rgba(16,185,129,0.15)" stroke="#10b981" stroke-width="2"/>
                   </g>
                   <g class="drum-piece" data-drum="snare" data-sound="snare" tabindex="0" role="button" aria-label="Snare drum">
-                    <rect class="hit-area" x="95" y="48" width="50" height="30" fill="transparent"/>
+                    <rect class="hit-area" x="131" y="42" width="22" height="38" fill="transparent"/>
                     <ellipse cx="120" cy="63" rx="28" ry="16" fill="rgba(34,211,238,0.1)" stroke="#22d3ee" stroke-width="2"/>
                     <ellipse cx="120" cy="63" rx="20" ry="11" fill="rgba(34,211,238,0.2)" stroke="#22d3ee" stroke-width="1"/>
                   </g>
                   <g class="drum-piece" data-drum="kick" data-sound="kick" tabindex="0" role="button" aria-label="Kick drum">
-                    <rect class="hit-area" x="105" y="62" width="50" height="36" fill="transparent"/>
+                    <rect class="hit-area" x="95" y="56" width="65" height="44" fill="transparent"/>
                     <ellipse cx="130" cy="80" rx="32" ry="22" fill="none" stroke="#f5b942" stroke-width="2.5"/>
                     <ellipse cx="130" cy="80" rx="24" ry="16" fill="rgba(245,185,66,0.15)" stroke="#f5b942" stroke-width="1"/>
                   </g>
                   <g class="drum-piece" data-drum="floor" data-sound="floor" tabindex="0" role="button" aria-label="Floor tom">
-                    <rect class="hit-area" x="200" y="52" width="44" height="36" fill="transparent"/>
+                    <rect class="hit-area" x="190" y="46" width="55" height="44" fill="transparent"/>
                     <ellipse cx="222" cy="70" rx="22" ry="15" fill="rgba(16,185,129,0.15)" stroke="#10b981" stroke-width="2"/>
                   </g>
                 </svg>
                 <div class="drum-waveform" id="drumWaveform" aria-hidden="true"></div>
                 <div class="piano-hint" id="drumHint">Tap the drums 🥁</div>
+                <div class="drum-silent-hint" id="drumSilentHint" style="display:none;text-align:center;font-size:12px;color:var(--accent-amber);margin-top:6px;font-family:var(--font-mono);">🔇 Turn off silent mode for sound</div>
               </div>
           </div>
           </div>
@@ -831,6 +832,7 @@
             <div class="place-note" id="placeNote" aria-live="polite"></div>
           </div>
           </div>
+          <div class="swipe-hint" id="swipeHint" aria-hidden="true"><span class="dot"></span><span class="dot"></span><span class="dot"></span> Swipe or tap the tabs</div>
         </div>
       </div>
     </section>
@@ -984,7 +986,7 @@
   <!-- Confetti Canvas -->
   <canvas id="confettiCanvas" class="confetti-canvas"></canvas>
 
-  <script src="creations-data.js" defer></script>
-  <script src="script.js" defer></script>
+  <script src="creations-data.js?v=2" defer></script>
+  <script src="script.js?v=2" defer></script>
 </body>
 </html>

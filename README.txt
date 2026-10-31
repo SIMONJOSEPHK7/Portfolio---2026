@@ -17,6 +17,13 @@ How to open:
 2. Or simply double-click index.html to open in your browser.
 3. For mobile: upload files to GitHub Pages as described in README.txt.
 
+CACHE-BUSTING (for GitHub Pages):
+- The HTML links to assets with a version query string, e.g. `style.css?v=2`,
+  `script.js?v=2`, `creations-data.js?v=2`.
+- After every update you MUST bump the `?v=` number (e.g. v=2 -> v=3) so phones
+  that cached the old file get the newest version. Browsers otherwise serve the
+  cached file and your changes appear "not deployed".
+
 How to add a website:
 1. Open creations-data.js.
 2. Copy one entry object inside window.CREATIONS.

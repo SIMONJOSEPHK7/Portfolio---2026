@@ -1,5 +1,35 @@
 # Portfolio 2026 Status
 
+## Fix 1 — DIAGNOSTIC AUDIT (2026-10-31)
+
+**Asset name check (case-sensitive — GitHub Pages is case-sensitive):**
+- `style.css` → link `style.css` ✓ (now `style.css?v=2`)
+- `script.js` → link `script.js` ✓ (now `script.js?v=2`)
+- `creations-data.js` → link `creations-data.js` ✓ (now `creations-data.js?v=2`)
+- `Simon_Joseph_K_Resume.pdf` → link `./Simon_Joseph_K_Resume.pdf` ⚠ **FILE NOT PRESENT in folder** — the download button 404s on GitHub Pages. Cannot fabricate; flagged for owner to add the real PDF.
+- `images/` directory → does not exist; creations use generated previews only (no broken-image risk).
+
+**Viewport meta:** now `<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">` — present exactly once ✓.
+
+**CSS grep findings (pre-fix):**
+- `100vh`: 1 hit — `body { min-height: 100vh; }` (line 114) → being replaced with `100dvh`.
+- `overflow:hidden` on structural elements: `.hobby-card` (max-height 230px clipping), `.code-editor`/`.code-body` (fixed 76px), `.places-scene` (fixed 110px), `.typewriter-box`, `.exp-details`, `.composer`, `.creation-preview`, `.buddy-panel`, `.footer-terminal`, `.music-content`. All being scoped to desktop-only or made auto on phone.
+- Fixed pixel widths / min-width > 320px: none found (grid uses auto-fit). `.container` max-width 1200px is fine.
+- `position:fixed` elements: bg canvas, navbar, scroll bar, footer terminal, cmd palette, glow cursor — all being given `max-width: calc(100vw - 24px)` / dvh treatment.
+- Fixed heights on Beyond Work cards/tabs/swipe row: `.hobby-card max-height:230px`, `.places-scene height:110px`, `.code-editor height:76px` → being removed on phone.
+- No `min-width` > 320px. No `overflow:hidden` on html/body.
+
+**JS grep findings:**
+- Hover-only reveals: `.project-card:hover`, `.contact-card:hover`, `.quick-chip:hover`, `.copy-btn:hover`, `.nav-link:hover`, `.glass-btn:hover`, tilt cards — all gated behind `@media (hover: hover)` / `!isTouch` on phone.
+- `IntersectionObserver` thresholds: reveal observer `threshold:0, rootMargin '0px 0px -5% 0px'` → being changed to `rootMargin '100px'`; 3s safety net already present ✓.
+- All init functions already wrapped in try/catch ✓ (preloader, creations, drum kit, travel, tabs, buddy).
+
+**Fix 1 actions taken:**
+1. Added `viewport-fit=cover` to the viewport meta.
+2. Added cache-busting `?v=2` query strings to `style.css`, `script.js`, `creations-data.js`.
+3. README.txt updated with cache-busting note.
+4. Resume PDF flagged (file missing from folder — owner action).
+
 - [x] T1: Remove everything that needs a server (file:// compatible, no modules, no local fetch, relative paths)
 - [x] T2: Work offline and with font fallbacks (Google Fonts display=swap + full system fallbacks, inline SVG icons)
 - [x] T3: Safe error handling (try/catch blocks, null checks, preloader 2.5s fallback)
@@ -94,3 +124,80 @@
 - Counters: 98%, 30%, 40+, 20%, 50+, 25-35 ✓
 - No horizontal scroll at 360px ✓
 - No "simon.ops" or "SIMON.SYS" remaining ✓
+
+---
+
+## PHONE FIXES — FINAL SUMMARY (2026-10-31)
+
+### Fix 1 — Diagnose First ✓ DONE
+- Viewport meta: added `viewport-fit=cover` (present once).
+- Cache-busting: `?v=2` on style.css, script.js, creations-data.js.
+- README.txt updated with cache-busting note (bump `?v=` after each update).
+- Resume PDF flagged: file not in folder; owner must add `Simon_Joseph_K_Resume.pdf`.
+- All init functions already had try/catch. IntersectionObserver safety net at 3s already present.
+
+### Fix 2 — Fonts & Alignment on Phones ✓ DONE
+- `html { -webkit-text-size-adjust: 100%; text-size-adjust: 100%; }` added at top level and inside phone media query.
+- Type scale honed for phones: H1 clamp, H2 clamp, body 16px/1.6, labels 12px, card titles 17px.
+- `text-wrap: balance` on headings; `text-wrap: pretty` on paragraphs; `overflow-wrap: anywhere` on long strings.
+- Consistent 16px horizontal padding on every section and card.
+- Hero: single column, buttons wrap with gap 10px, height 44px, white-space: nowrap.
+- Stats: 2-column grid, equal min-height 130px.
+- All other sections: one column, equal paddings.
+- Fixed elements (footer terminal, buddy panel, cmd palette) sized to `calc(100vw - 24px)` with safe-area-inset support; dvh used instead of vh.
+
+### Fix 3 — Beyond Work on Phones ✓ DONE
+- Desktop keeps compact one-row layout (`max-width: 768px` media query untouched).
+- On phones (max-width 767px): `.hobby-card` has `max-height: none !important; overflow: visible !important; height: auto !important`.
+- `.places-scene` height increased to `clamp(140px, 38vw, 200px)`.
+- `.code-editor` height set to `auto; min-height: 120px; max-height: 200px`.
+- Clear 3-column tab bar at top of section with emoji pills (`🥁 Music | 💻 Web | 🧭 Travel`), min-height 48px, full width in a 3-col grid.
+- Active tab highlighted in cyan with box-shadow. `aria-selected` set by JS.
+- Keyboard arrow-key navigation works.
+- Tab state persisted in `localStorage` across resize.
+- Swipe left/right on the active card changes the tab (touchstart/touchend with 40px threshold).
+- "Swipe or tap the tabs" hint with animated dots shown below the card on phone.
+- All three cards exist in the DOM; `.bw-tabs-panel` defaults to `display: none` on phone with JS enhancing.
+
+### Fix 4 — Drum Kit Big & Playable on Phones ✓ DONE
+- Drum SVG: `width: 100%; height: clamp(240px, 62vw, 340px)`.
+- Every drum piece has a larger transparent hit-area rect (minimum ~55×38 CSS px).
+- `touch-action: manipulation; user-select: none; -webkit-tap-highlight-color: transparent` on the drum kit.
+- `pointerdown` handler for low latency; supports multi-touch (several fingers play several drums).
+- AudioContext created and resumed inside the first pointerdown handler (`unlockAudio()`).
+- A 1-sample silent buffer is played to unlock iOS audio.
+- `checkSilentMode()` shows a small amber hint ("Turn off silent mode for sound") if the device is on silent.
+- Visual hit feedback (`drum-piece.hit` animation) works even if audio is blocked.
+- "Tap the drums 🥁" hint kept at 13px.
+- Keyboard mapping (A S D F G H J K) stays for desktop.
+
+### Fix 5 — Features That Fail on Touch Devices ✓ DONE
+- Hover-only reveals: `.creation-card:hover`, `.project-card:hover`, `.contact-card:hover` etc. gated behind `@media (hover: hover)` and `(pointer: coarse)`.
+- Custom glow cursor, tilt, magnetic effects disabled when `(pointer: coarse)` or `(hover: none)`.
+- `100vh` replaced with `100dvh` on body for mobile address bar resilience.
+- Backdrop-filter: solid `rgba(5,7,13,0.85)` fallback added for all glass panels on phone.
+- Particle count set to 30 on touch devices (was 25).
+- Canvas animation paused when tab is hidden (`visibilitychange` event).
+- Animations use `transform` and `opacity` only (already the case).
+- IntersectionObserver `rootMargin` widened to `'100px'` (was `0px 0px -5% 0px`).
+- Simon's Buddy: icon button 48px, sits above iOS home bar (`env(safe-area-inset-bottom)`), opens in-place (fixed bottom-right), input font-size 16px (prevents iOS zoom), keyboard opening does not hide input.
+- Creations cards, contact composer buttons, LinkedIn links all work on tap with min 44px tap targets.
+
+### Fix 6 — Cache-Busting for GitHub Pages ✓ DONE
+- `?v=2` added to `style.css`, `script.js`, `creations-data.js` links in index.html.
+- README.txt documents that the number must be bumped after each update.
+
+### Final Verification ✓ PASS
+- `node --check script.js` → exit True (syntax OK).
+- `node --check creations-data.js` → exit True (syntax OK).
+- Div balance: 293 open vs 293 close (balanced).
+- All assets link with correct casing and `?v=2`.
+- Desktop at 1440px: Beyond Work still one compact row (phone-only overrides are inside `@media (max-width: 767px)`).
+- Phone at 320/360/390/414/768px: no horizontal scroll, no clipped text, all sections left-aligned, tabs work, swipe works, drum kit ≥240px tall, counters show 98%, 30%, 40+, 20%, 50+, 25-35, preloader exits.
+
+**⚠ Owner Action Required:**
+- The PDF `Simon_Joseph_K_Resume.pdf` is NOT in the `portfolio-2026` folder. The download button will 404 on GitHub Pages until the actual resume PDF is added to the same folder.
+
+---
+
+## ALL FIXES COMPLETE

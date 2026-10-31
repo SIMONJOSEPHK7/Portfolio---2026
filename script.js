@@ -131,7 +131,7 @@ document.addEventListener('DOMContentLoaded', () => {
         entry.target.classList.remove('reveal-active');
       }
     });
-  }, { threshold: 0, rootMargin: '0px 0px -5% 0px' });
+  }, { threshold: 0, rootMargin: '100px' });
   document.querySelectorAll('.reveal, .stat-card').forEach(el => revealObserver.observe(el));
   // Safety net: force every reveal element visible after 3s regardless of
   // IntersectionObserver quirks (zoomed-out viewports, lazy observers).
@@ -257,7 +257,7 @@ document.addEventListener('DOMContentLoaded', () => {
       // Density scales with canvas area so zoomed-out viewports still get
       // a visible network (clamped to keep small phones light).
       const count = isTouch
-        ? 25
+        ? 30
         : Math.max(30, Math.min(140, Math.floor((W * H) / 18000)));
       particles = Array.from({ length: count }, () => ({
         x: Math.random() * W, y: Math.random() * H,
@@ -279,10 +279,16 @@ document.addEventListener('DOMContentLoaded', () => {
     const mql = window.matchMedia('(pointer: coarse)');
     mql.addEventListener('change', () => { isTouch = mql.matches; seedParticles(); });
     let mouse = { x: null, y: null };
+    let paused = false;
     window.addEventListener('mousemove', e => { mouse.x = e.clientX; mouse.y = e.clientY; });
     window.addEventListener('mouseleave', () => { mouse.x = null; mouse.y = null; });
+    document.addEventListener('visibilitychange', () => {
+      paused = document.hidden;
+      if (!paused) requestAnimationFrame(draw);
+    });
 
     function draw() {
+      if (paused) return;
       ctx.clearRect(0, 0, W, H);
       ctx.fillStyle = 'rgba(34, 211, 238, 0.6)';
       ctx.strokeStyle = 'rgba(34, 211, 238, 0.08)';
@@ -562,10 +568,11 @@ document.addEventListener('DOMContentLoaded', () => {
   footerToggle.textContent = '🖥️';
   footerToggle.setAttribute('aria-label', 'Open Simon\'s Buddy');
   footerToggle.style.cssText = `
-    position: fixed; bottom: 1rem; right: 1rem; z-index: 1001;
-    width: 44px; height: 44px; border-radius: 10px; font-size: 1.3rem;
-    background: rgba(5,7,13,0.8); border: 1px solid rgba(34,211,238,0.3);
+    position: fixed; bottom: calc(0.5rem + env(safe-area-inset-bottom)); right: 0.5rem; z-index: 1001;
+    width: 48px; height: 48px; border-radius: 12px; font-size: 1.4rem;
+    background: rgba(5,7,13,0.85); border: 1px solid rgba(34,211,238,0.35);
     cursor: pointer; backdrop-filter: blur(8px); pointer-events: auto;
+    touch-action: manipulation;
   `;
   document.body.appendChild(footerToggle);
 
@@ -645,11 +652,11 @@ document.addEventListener('DOMContentLoaded', () => {
     let audioCtx = null;
     let masterGain = null;
     let compressor = null;
+    let audioUnlocked = false;
 
     function ensureAudio() {
       if (!audioCtx) {
         audioCtx = new (window.AudioContext || window.webkitAudioContext)();
-        if (audioCtx.state === 'suspended') audioCtx.resume();
         masterGain = audioCtx.createGain();
         masterGain.gain.value = 0.6;
         compressor = audioCtx.createDynamicsCompressor();
@@ -663,6 +670,40 @@ document.addEventListener('DOMContentLoaded', () => {
       }
       if (audioCtx.state === 'suspended') audioCtx.resume();
       return audioCtx;
+    }
+
+    // iOS/Android: unlock audio on the first user gesture and play a 1-sample
+    // silent buffer so the device exits its "blocked" state.
+    function unlockAudio() {
+      if (audioUnlocked) return;
+      try {
+        const ctx = ensureAudio();
+        const buf = ctx.createBuffer(1, 1, ctx.sampleRate);
+        const src = ctx.createBufferSource();
+        src.buffer = buf;
+        src.connect(ctx.destination);
+        src.start();
+        audioUnlocked = true;
+        if (drumHint) drumHint.textContent = 'Tap the drums 🥁';
+      } catch (e) { /* ignore */ }
+    }
+
+    // Detect a silent/muted device and show a hint.
+    function checkSilentMode() {
+      const hint = document.getElementById('drumSilentHint');
+      if (!hint) return;
+      const isTouch = 'ontouchstart' in window || window.matchMedia('(pointer: coarse)').matches;
+      if (!isTouch) { hint.style.display = 'none'; return; }
+      // Heuristic: on iOS/Android the AudioContext will stay suspended after a
+      // user gesture if the device is on silent. We probe after a short delay.
+      setTimeout(() => {
+        if (!audioCtx) return;
+        if (audioCtx.state === 'suspended') {
+          hint.style.display = 'block';
+        } else {
+          hint.style.display = 'none';
+        }
+      }, 1500);
     }
 
     // Sound generators
@@ -822,8 +863,10 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
 
-    // Drum piece clicks
+    // Drum piece clicks — pointerdown for low latency, multi-touch aware
+    checkSilentMode();
     drumSvg?.addEventListener('pointerdown', e => {
+      unlockAudio();
       const piece = e.target.closest('.drum-piece');
       if (!piece) return;
       e.preventDefault();
@@ -1042,18 +1085,67 @@ document.addEventListener('DOMContentLoaded', () => {
     }
   } catch (e) { console.error('Travel animation error:', e); }
 
-  // ── Hobbies: Tab Switching ──────────────────────────────────────────────
+  // ── Hobbies: Tab Switching + Swipe ──────────────────────────────────────
   try {
     const bwTabs = document.getElementById('bwTabs');
     const panels = document.querySelectorAll('.bw-tabs-panel');
+    const tabs = bwTabs ? Array.from(bwTabs.querySelectorAll('.bw-tab')) : [];
+    const panelOrder = ['music', 'web', 'travel'];
+    const swipeHint = document.getElementById('swipeHint');
+    let activeIdx = 0;
+
+    function isPhone() { return window.matchMedia('(max-width: 767px)').matches; }
+
+    function setTab(idx) {
+      idx = ((idx % panelOrder.length) + panelOrder.length) % panelOrder.length;
+      activeIdx = idx;
+      const target = panelOrder[idx];
+      tabs.forEach(b => {
+        const on = b.dataset.tab === target;
+        b.classList.toggle('active', on);
+        b.setAttribute('aria-selected', on ? 'true' : 'false');
+      });
+      panels.forEach(p => p.classList.toggle('active', p.dataset.panel === target));
+      try { localStorage.setItem('bw-active-tab', target); } catch (e) {}
+      if (swipeHint) swipeHint.style.display = isPhone() ? 'block' : 'none';
+    }
+
+    function getSaved() {
+      try { const s = localStorage.getItem('bw-active-tab'); if (panelOrder.includes(s)) return panelOrder.indexOf(s); } catch (e) {}
+      return 0;
+    }
+
     if (bwTabs && panels.length) {
+      setTab(getSaved());
+
+      // Tap / click
       bwTabs.addEventListener('click', (e) => {
         const btn = e.target.closest('.bw-tab');
         if (!btn) return;
-        const target = btn.dataset.tab;
-        bwTabs.querySelectorAll('.bw-tab').forEach(b => b.classList.toggle('active', b === btn));
-        panels.forEach(p => p.classList.toggle('active', p.dataset.panel === target));
+        setTab(panelOrder.indexOf(btn.dataset.tab));
       });
+
+      // Keyboard
+      bwTabs.addEventListener('keydown', (e) => {
+        const btn = e.target.closest('.bw-tab');
+        if (!btn) return;
+        if (e.key === 'ArrowRight') { e.preventDefault(); setTab(activeIdx + 1); tabs[(activeIdx + 1) % tabs.length]?.focus(); }
+        else if (e.key === 'ArrowLeft') { e.preventDefault(); setTab(activeIdx - 1); tabs[(activeIdx - 1 + tabs.length) % tabs.length]?.focus(); }
+      });
+
+      // Swipe on the active card
+      const card = document.getElementById('musicCard') || document.getElementById('webCard') || document.getElementById('travelCard');
+      const swipeTarget = panels[activeIdx]?.querySelector('.hobby-card') || card;
+      if (swipeTarget) {
+        let sX = 0, sY = 0, sT = 0;
+        swipeTarget.addEventListener('pointerdown', e => { sX = e.clientX; sY = e.clientY; sT = e.timeStamp; }, { passive: true });
+        swipeTarget.addEventListener('pointerup', e => {
+          const dx = e.clientX - sX, dy = e.clientY - sY, dt = e.timeStamp - sT;
+          if (dt > 500) return;
+          if (Math.abs(dx) < 40 || Math.abs(dx) < Math.abs(dy)) return;
+          setTab(activeIdx + (dx < 0 ? 1 : -1));
+        }, { passive: true });
+      }
     }
   } catch (e) { console.error('Tab switching error:', e); }
 
