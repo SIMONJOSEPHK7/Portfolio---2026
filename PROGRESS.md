@@ -200,4 +200,56 @@
 
 ---
 
+---
+
+## PART A: PHONE FIXES (2026-11-01)
+
+### A1 — Type scale & one left edge ✓
+- `html { -webkit-text-size-adjust:100%; text-size-adjust:100%; }` (top-level + phone).
+- Phone body 15px/1.6; small text 13-14px; labels/mono tags 12px uppercase (letter-spacing 0.06em).
+- H1 `clamp(1.7rem, 7.5vw, 2.2rem)`; H2 `clamp(1.3rem, 5.5vw, 1.6rem)`; card titles 16-17px; nothing under 12px.
+- Headings `text-wrap: balance`, paragraphs `text-wrap: pretty`, `overflow-wrap: anywhere`.
+- ONE container with `padding-inline 16px`; inner wrappers (`hero-container`, grids, quick-facts) reset to 0. Every heading/label/card/text block starts on the same left edge.
+- Mono font only for labels, terminal and ticket text (12-13px). Body, buttons and chat bubbles use the sans font.
+
+### A2 — Navbar (phones) ✓
+- Height 56px, fixed, left/right 8px, flex, nowrap, gap 8px, padding-inline 12px, radius 16px, max-width `calc(100vw-16px)`, overflow hidden.
+- Under 480px: only "SJK" monogram + bolt icon (brand-text hidden, brand-text-full shown). Full name returns above 480px.
+- "⌘K" palette button hidden on phones; palette stays in the hamburger menu.
+- Theme toggle, hamburger and LinkedIn: identical 40x40 round buttons (44px tap area via ::after), icons 20px, grouped right with margin-left:auto.
+- Content `padding-top: calc(56px + 20px)`; `scroll-padding-top: calc(56px + 12px)`.
+- Hamburger panel: full width under the navbar, links 48px high, 16px text, closes on tap.
+
+### A3 — Hero (phones) ✓
+- Status pill: 12px text, padding 6px 12px, radius 14px; wraps left-aligned with 6px gap if needed.
+- Typewriter: 15px mono, min-height 1.6em, nowrap, overflow hidden, ellipsis, margin 8px 0, cursor inline.
+- Pitch 15px/1.55, margin 10px 0 14px.
+- Buttons: 2-column grid, gap 10px; "View My Work" spans both columns; "Download Resume" + "Let's Talk" share row two; height 44px, 14px text, nowrap.
+- Ticket card: full width, padding 14px, title 14px, labels 12px, values 13px, labels left / values right, chips 12px.
+- Gap from hero to Telemetry & KPIs 24-32px.
+
+### A4 — Simon's Buddy as a phone bottom sheet ✓
+- Phone layout: fixed; left/right 8px; bottom `calc(8px + env(safe-area-inset-bottom))`; width auto; max-width `calc(100vw - 16px)`; z-index 1000; flex column; radius 16px; solid `rgba(8,12,20,0.97)`.
+- Height `min(520px, calc(var(--vvh,100dvh) - 80px))`; top edge never closer than 64px to the top → never covers the navbar.
+- Keyboard: `window.visualViewport` guarded; on resize/scroll sets `--vvh` and keeps the sheet pinned above the keyboard.
+- Structure: header 44px (avatar 28px, title 14px, close 44x44); messages flex:1 1 auto, min-height 140px, overflow-y auto, overscroll-behavior contain; chips ONE horizontally scrollable line (nowrap, hidden scrollbar, 36px high, 13px sans); input row 52px with "$" prompt, input 16px, Send 44x44.
+- Bubbles: sans 14px/1.5, max-width 88%, padding 8px 12px, buddy cyan left, visitor violet right, overflow-wrap anywhere.
+- Dock button: fixed bottom-right (right 16px; bottom `calc(16px + env(safe-area-inset-bottom))`), 52x52, z-index 999. `display:none` while the sheet is open; shown again on close. No stray "simon@portfolio:~$" text in the page flow.
+- Opening the sheet does not scroll or shift the page; closing returns focus to the dock button.
+- Typing works: real `<input type="text">`, autocomplete off, enterkeyhint="send". Every global key handler (/, Ctrl+K, Konami, drum keys) returns at once when event.target is INPUT, TEXTAREA, SELECT or contenteditable.
+
+### A5 — Other phone cleanup ✓
+- Stats: 2 columns, equal heights, numbers 26-28px, labels 12-13px.
+- Quick Facts, skills, timeline, projects, creations, education, contact composer: single column, 16px side padding, card padding 14-16px, buttons 44px, nothing touching the screen edge.
+- 100vh plain fallback first (`min-height:100vh`) then `100dvh`.
+- Hover glow, tilt, magnetic and custom cursor wrapped in `(hover: hover) and (pointer: fine)`; hover-only content gets a tap alternative.
+- About 30 particles on phones; canvas paused on `visibilitychange`.
+- Every init function in script.js in its own try/catch with `console.warn`.
+
+### A6 — Instagram / Facebook in-app browser ✓
+- If `/Instagram|FBAN|FBAV/i` matches `navigator.userAgent`, adds class `inapp` to `<html>` and shows a small dismissible one-line note under the navbar ("Tip: open in Chrome or Safari for the best experience") with a ✕ button (state in memory only).
+- On `.inapp`: solid backgrounds instead of backdrop-filter, no reliance on 100vh, try/catch around localStorage, clipboard and visualViewport, plain `<a target="_blank" rel="noopener noreferrer">` links, plain mailto:/tel: anchors.
+
+---
+
 ## ALL FIXES COMPLETE

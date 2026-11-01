@@ -1,0 +1,164 @@
+<svg id="drumSvg" viewBox="0 0 400 360" preserveAspectRatio="xMidYMid meet" role="group" aria-label="Drum kit - click or press keys to play">
+  <defs>
+    <linearGradient id="neonCore" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#ffb347"/>
+      <stop offset="100%" stop-color="#fff2d0"/>
+    </linearGradient>
+    <linearGradient id="streakFade" x1="0" y1="0" x2="1" y2="0">
+      <stop offset="0%" stop-color="#ff7a00" stop-opacity="0"/>
+      <stop offset="20%" stop-color="#ff8a1f" stop-opacity="0.5"/>
+      <stop offset="50%" stop-color="#f5b942" stop-opacity="0.85"/>
+      <stop offset="80%" stop-color="#ff8a1f" stop-opacity="0.5"/>
+      <stop offset="100%" stop-color="#ff7a00" stop-opacity="0"/>
+    </linearGradient>
+    <style>
+      .glow { fill:none; stroke:#ff7a00; stroke-width:6; stroke-linecap:round; stroke-linejoin:round; opacity:0.18; }
+      .core { fill:none; stroke:url(#neonCore); stroke-width:1.6; stroke-linecap:round; stroke-linejoin:round; }
+      .dot { fill:#fff2d0; }
+      .floor-line { stroke:url(#streakFade); stroke-linecap:round; }
+    </style>
+  </defs>
+
+  <!-- Floor: stage light streaks + soft glow under the kick -->
+  <g class="neon-floor">
+    <line class="floor-line" x1="60" y1="300" x2="340" y2="300" stroke-width="2"/>
+    <line class="floor-line" x1="80" y1="308" x2="320" y2="308" stroke-width="2"/>
+    <line class="floor-line" x1="50" y1="316" x2="350" y2="316" stroke-width="2"/>
+    <line class="floor-line" x1="100" y1="324" x2="300" y2="324" stroke-width="2"/>
+    <line class="floor-line" x1="70" y1="332" x2="330" y2="332" stroke-width="2"/>
+    <line class="floor-line" x1="120" y1="340" x2="280" y2="340" stroke-width="2"/>
+    <ellipse class="floor-line" cx="200" cy="304" rx="120" ry="10" stroke-width="3" opacity="0.5"/>
+  </g>
+
+  <!-- 3. Kick drum: front-centre circle r=70, rim ring, inner ring, 8 lug ticks, logo ring, two spur legs -->
+  <g class="drum-piece" data-drum="kick" data-sound="kick" tabindex="0" role="button" aria-label="Kick drum">
+    <rect class="neon-hit-area" x="130" y="155" width="140" height="80" fill="transparent"/>
+    <g class="glow"><circle cx="200" cy="200" r="70"/><circle cx="200" cy="200" r="62"/><circle cx="200" cy="200" r="14"/></g>
+    <g class="core"><circle cx="200" cy="200" r="70"/><circle cx="200" cy="200" r="62"/><circle cx="200" cy="200" r="14"/></g>
+    <circle cx="200" cy="200" r="14" fill="rgba(245,185,66,0.04)"/>
+    <g class="core">
+      <circle cx="200" cy="130" r="3"/><circle cx="270" cy="160" r="3"/>
+      <circle cx="200" cy="270" r="3"/><circle cx="130" cy="160" r="3"/>
+      <circle cx="240" cy="140" r="3"/><circle cx="240" cy="260" r="3"/>
+      <circle cx="160" cy="260" r="3"/><circle cx="160" cy="140" r="3"/>
+    </g>
+    <g class="core">
+      <path d="M200,130 L200,115 M270,160 L285,155 M200,270 L200,285 M130,160 L115,155"/>
+      <path d="M240,140 L255,128 M240,260 L255,272 M160,260 L145,272 M160,140 L145,128"/>
+    </g>
+    <g class="core">
+      <path d="M200,270 Q170,295 150,300 M200,270 Q230,295 250,300"/>
+    </g>
+    <circle class="dot" cx="200" cy="200" r="1.6"/>
+  </g>
+
+  <!-- 4. Rack tom left (data-drum="tom1"): ellipse top rx 42 ry 16, short body, double rim, 4 lug ticks -->
+  <g class="drum-piece" data-drum="tom1" data-sound="tom1" tabindex="0" role="button" aria-label="High tom">
+    <rect class="neon-hit-area" x="105" y="115" width="90" height="70" fill="transparent"/>
+    <g class="glow"><ellipse cx="150" cy="150" rx="42" ry="16"/><ellipse cx="150" cy="150" rx="38" ry="14"/><line x1="150" y1="134" x2="150" y2="110"/></g>
+    <g class="core"><ellipse cx="150" cy="150" rx="42" ry="16"/><ellipse cx="150" cy="150" rx="38" ry="14"/><line x1="150" y1="134" x2="150" y2="110"/></g>
+    <g class="core">
+      <circle cx="112" cy="150" r="2.5"/><circle cx="188" cy="150" r="2.5"/>
+      <circle cx="130" cy="142" r="2.5"/><circle cx="170" cy="142" r="2.5"/>
+    </g>
+    <g class="core">
+      <path d="M112,150 L105,145 M188,150 L195,145 M130,142 L124,136 M170,142 L176,136"/>
+    </g>
+    <g class="core"><path d="M150,110 L150,95 M150,95 L200,95"/></g>
+    <circle class="dot" cx="150" cy="110" r="2"/>
+    <circle class="dot" cx="150" cy="95" r="2"/>
+  </g>
+
+  <!-- 5. Rack tom right (data-drum="tom2"): same style, shifted right -->
+  <g class="drum-piece" data-drum="tom2" data-sound="tom2" tabindex="0" role="button" aria-label="Mid tom">
+    <rect class="neon-hit-area" x="210" y="110" width="90" height="70" fill="transparent"/>
+    <g class="glow"><ellipse cx="250" cy="145" rx="40" ry="15"/><ellipse cx="250" cy="145" rx="36" ry="13"/><line x1="250" y1="130" x2="250" y2="105"/></g>
+    <g class="core"><ellipse cx="250" cy="145" rx="40" ry="15"/><ellipse cx="250" cy="145" rx="36" ry="13"/><line x1="250" y1="130" x2="250" y2="105"/></g>
+    <g class="core">
+      <circle cx="214" cy="145" r="2.5"/><circle cx="286" cy="145" r="2.5"/>
+      <circle cx="232" cy="137" r="2.5"/><circle cx="268" cy="137" r="2.5"/>
+    </g>
+    <g class="core">
+      <path d="M214,145 L207,140 M286,145 L293,140 M232,137 L226,131 M268,137 L274,131"/>
+    </g>
+    <g class="core"><path d="M250,105 L250,95 M250,95 L200,95"/></g>
+    <circle class="dot" cx="250" cy="105" r="2"/>
+    <circle class="dot" cx="250" cy="95" r="2"/>
+  </g>
+
+  <!-- 6. Floor tom (data-drum="floor"): ellipse top rx 52, body, 3 thin legs -->
+  <g class="drum-piece" data-drum="floor" data-sound="floor" tabindex="0" role="button" aria-label="Floor tom">
+    <rect class="neon-hit-area" x="275" y="170" width="100" height="70" fill="transparent"/>
+    <g class="glow"><ellipse cx="325" cy="215" rx="52" ry="20"/><ellipse cx="325" cy="215" rx="46" ry="17"/><line x1="325" y1="195" x2="325" y2="170"/></g>
+    <g class="core"><ellipse cx="325" cy="215" rx="52" ry="20"/><ellipse cx="325" cy="215" rx="46" ry="17"/><line x1="325" y1="195" x2="325" y2="170"/></g>
+    <g class="core">
+      <circle cx="277" cy="215" r="2.5"/><circle cx="373" cy="215" r="2.5"/><circle cx="325" cy="199" r="2.5"/>
+      <path d="M277,215 L270,205 M373,215 L380,205 M325,199 L325,190"/>
+    </g>
+    <g class="core"><path d="M325,235 L305,290 M325,235 L325,295 M325,235 L345,290"/></g>
+    <circle class="dot" cx="305" cy="290" r="2"/><circle class="dot" cx="325" cy="295" r="2"/><circle class="dot" cx="345" cy="290" r="2"/>
+  </g>
+
+  <!-- 7. Snare (data-drum="snare"): ellipse top rx 44, wire lines, tripod stand, front-left -->
+  <g class="drum-piece" data-drum="snare" data-sound="snare" tabindex="0" role="button" aria-label="Snare drum">
+    <rect class="neon-hit-area" x="100" y="210" width="90" height="70" fill="transparent"/>
+    <g class="glow"><ellipse cx="145" cy="250" rx="44" ry="18"/><ellipse cx="145" cy="250" rx="38" ry="15"/><line x1="145" y1="232" x2="145" y2="205"/></g>
+    <g class="core"><ellipse cx="145" cy="250" rx="44" ry="18"/><ellipse cx="145" cy="250" rx="38" ry="15"/><line x1="145" y1="232" x2="145" y2="205"/></g>
+    <g class="core">
+      <line x1="120" y1="245" x2="170" y2="245"/><line x1="120" y1="250" x2="170" y2="250"/>
+      <line x1="120" y1="255" x2="170" y2="255"/><line x1="120" y1="260" x2="170" y2="260"/>
+      <circle cx="108" cy="250" r="2.5"/><circle cx="182" cy="250" r="2.5"/>
+      <path d="M108,250 L100,240 M182,250 L190,240"/>
+    </g>
+    <g class="core"><path d="M145,205 L145,190 M145,190 L170,190 M170,190 L170,205"/></g>
+    <g class="core"><path d="M145,268 L130,300 M145,268 L145,305 M145,268 L160,300"/></g>
+    <circle class="dot" cx="130" cy="300" r="2"/><circle class="dot" cx="145" cy="305" r="2"/><circle class="dot" cx="160" cy="300" r="2"/>
+  </g>
+
+  <!-- 8. Hi-hat (data-drum="hihat"): two thin cymbal ellipses on a tall stand with a small pedal, far left -->
+  <g class="drum-piece" data-drum="hihat" data-sound="hihat" tabindex="0" role="button" aria-label="Hi-hat">
+    <rect class="neon-hit-area" x="40" y="180" width="70" height="70" fill="transparent"/>
+    <g class="glow"><ellipse cx="75" cy="210" rx="26" ry="7"/><ellipse cx="75" cy="204" rx="22" ry="6"/><line x1="75" y1="217" x2="75" y2="150"/></g>
+    <g class="core"><ellipse cx="75" cy="210" rx="26" ry="7"/><ellipse cx="75" cy="204" rx="22" ry="6"/><line x1="75" y1="217" x2="75" y2="150"/></g>
+    <g class="core"><path d="M75,150 L75,120 M75,120 L55,120 M75,120 L95,120"/></g>
+    <g class="core"><path d="M75,217 L75,250 M75,250 L55,250 M75,250 L95,250"/></g>
+    <circle class="dot" cx="75" cy="150" r="2"/><circle class="dot" cx="75" cy="217" r="2"/><circle class="dot" cx="75" cy="250" r="2"/>
+  </g>
+
+  <!-- 9. Crash cymbal (data-drum="crash"): wide thin ellipse rx 65 ry 10, small bell, 2 groove ellipses, tall stand, top left -->
+  <g class="drum-piece cymbal" data-drum="crash" data-sound="crash" tabindex="0" role="button" aria-label="Crash cymbal">
+    <rect class="neon-hit-area" x="10" y="30" width="110" height="70" fill="transparent"/>
+    <g class="glow"><ellipse cx="70" cy="70" rx="65" ry="10"/><ellipse cx="70" cy="70" rx="55" ry="8"/><ellipse cx="70" cy="70" rx="12" ry="4"/><line x1="70" y1="80" x2="70" y2="120"/></g>
+    <g class="core"><ellipse cx="70" cy="70" rx="65" ry="10"/><ellipse cx="70" cy="70" rx="55" ry="8"/><ellipse cx="70" cy="70" rx="12" ry="4"/><line x1="70" y1="80" x2="70" y2="120"/></g>
+    <g class="core"><path d="M70,120 L70,160 M70,160 L50,160 M70,160 L90,160"/></g>
+    <g class="core"><path d="M50,160 L35,210 M90,160 L105,210 M70,160 L70,215"/></g>
+    <circle class="dot" cx="35" cy="210" r="2"/><circle class="dot" cx="105" cy="210" r="2"/><circle class="dot" cx="70" cy="215" r="2"/>
+  </g>
+
+  <!-- 10. Ride cymbal (data-drum="ride"): same style, top right -->
+  <g class="drum-piece cymbal" data-drum="ride" data-sound="ride" tabindex="0" role="button" aria-label="Ride cymbal">
+    <rect class="neon-hit-area" x="280" y="30" width="110" height="70" fill="transparent"/>
+    <g class="glow"><ellipse cx="335" cy="75" rx="60" ry="9"/><ellipse cx="335" cy="75" rx="50" ry="7"/><ellipse cx="335" cy="75" rx="11" ry="3.5"/><line x1="335" y1="84" x2="335" y2="125"/></g>
+    <g class="core"><ellipse cx="335" cy="75" rx="60" ry="9"/><ellipse cx="335" cy="75" rx="50" ry="7"/><ellipse cx="335" cy="75" rx="11" ry="3.5"/><line x1="335" y1="84" x2="335" y2="125"/></g>
+    <g class="core"><path d="M335,125 L335,165 M335,165 L315,165 M335,165 L355,165"/></g>
+    <g class="core"><path d="M315,165 L300,215 M355,165 L370,215 M335,165 L335,220"/></g>
+    <circle class="dot" cx="300" cy="215" r="2"/><circle class="dot" cx="370" cy="215" r="2"/><circle class="dot" cx="335" cy="220" r="2"/>
+  </g>
+
+  <!-- 11. Stands, joints, faint stool outline behind the kit -->
+  <g class="core" opacity="0.55">
+    <path d="M200,95 L200,70 M200,70 L170,70 M200,70 L230,70"/>
+    <path d="M170,70 L170,55 M230,70 L230,55"/>
+    <path d="M200,200 L200,120"/>
+    <ellipse cx="200" cy="230" rx="26" ry="8" opacity="0.35"/>
+    <path d="M174,230 Q160,250 150,270 M226,230 Q240,250 250,270"/>
+    <path d="M200,270 L200,295"/>
+  </g>
+  <g class="dot" opacity="0.8">
+    <circle cx="200" cy="95" r="2.2"/><circle cx="170" cy="70" r="2.2"/><circle cx="230" cy="70" r="2.2"/>
+    <circle cx="170" cy="55" r="2"/><circle cx="230" cy="55" r="2"/><circle cx="200" cy="120" r="2"/>
+  </g>
+  <g class="glow" opacity="0.35">
+    <ellipse cx="200" cy="230" rx="26" ry="8"/>
+  </g>
+</svg>

@@ -27,6 +27,50 @@
 
 document.addEventListener('DOMContentLoaded', () => {
 
+  // ── A6: Instagram / Facebook in-app browser detection ───────────────────
+  try {
+    const ua = navigator.userAgent || '';
+    if (/Instagram|FBAN|FBAV/i.test(ua)) {
+      document.documentElement.classList.add('inapp');
+      const note = document.createElement('div');
+      note.style.cssText = `
+        position: fixed; top: calc(56px + 8px); left: 8px; right: 8px; z-index: 1002;
+        background: rgba(245,158,11,0.12); border: 1px solid rgba(245,158,11,0.4);
+        color: var(--text-main); font-size: 12px; padding: 6px 10px; border-radius: 10px;
+        display: flex; justify-content: space-between; align-items: center;
+        backdrop-filter: blur(8px); font-family: var(--font-body);
+      `;
+      note.innerHTML = 'Tip: open in Chrome or Safari for the best experience <button id="inappDismiss" style="background:none;border:none;color:inherit;cursor:pointer;font-size:16px">✕</button>';
+      document.body.appendChild(note);
+      const dismiss = document.getElementById('inappDismiss');
+      if (dismiss) dismiss.addEventListener('click', () => note.remove());
+    }
+  } catch (e) { /* ignore */ }
+
+  // ── Global key-guard: never hijack keys while the user is typing ────────
+  function isEditableTarget(t) {
+    if (!t) return false;
+    const tag = (t.tagName || '').toLowerCase();
+    return tag === 'input' || tag === 'textarea' || tag === 'select'
+      || t.isContentEditable;
+  }
+  document.addEventListener('keydown', e => {
+    if (isEditableTarget(e.target)) return;
+    if (e.key === '/' && !e.ctrlKey && !e.metaKey) {
+      e.preventDefault();
+      const palette = document.getElementById('cmdPalette');
+      if (palette) {
+        if (palette.style.display === 'grid') palette.style.display = 'none';
+        else if (window._openPalette) window._openPalette();
+      }
+    }
+    if ((e.ctrlKey || e.metaKey) && (e.key === 'k' || e.key === 'K')) {
+      e.preventDefault();
+      const btn = document.getElementById('cmdPaletteBtn');
+      if (btn) btn.click();
+    }
+  });
+
   // ── Preloader ──────────────────────────────────────────────────────────
   function finishPreloader() {
     const preloader = document.getElementById('preloader');
@@ -562,36 +606,77 @@ document.addEventListener('DOMContentLoaded', () => {
   // ── Simon's Buddy Floating Terminal ────────────────────────────────────
   const footerTerm = document.getElementById('footerTerminal');
   const ftClose = document.getElementById('ftClose');
+  const buddyDock = document.getElementById('buddyDock');
+  const buddySheet = document.getElementById('buddySheet');
+  const buddyInput = document.getElementById('buddyInput');
+  const buddyBody = document.getElementById('buddyBody');
 
-  const footerToggle = document.createElement('button');
-  footerToggle.className = 'ft-toggle-glass-btn';
-  footerToggle.textContent = '🖥️';
-  footerToggle.setAttribute('aria-label', 'Open Simon\'s Buddy');
-  footerToggle.style.cssText = `
-    position: fixed; bottom: calc(0.5rem + env(safe-area-inset-bottom)); right: 0.5rem; z-index: 1001;
-    width: 48px; height: 48px; border-radius: 12px; font-size: 1.4rem;
-    background: rgba(5,7,13,0.85); border: 1px solid rgba(34,211,238,0.35);
-    cursor: pointer; backdrop-filter: blur(8px); pointer-events: auto;
-    touch-action: manipulation;
-  `;
-  document.body.appendChild(footerToggle);
+  let vvh = window.innerHeight;
+  function updateVvh() {
+    try {
+      if (window.visualViewport) {
+        vvh = window.visualViewport.height;
+      } else {
+        vvh = window.innerHeight;
+      }
+    } catch (e) { vvh = window.innerHeight; }
+    document.documentElement.style.setProperty('--vvh', vvh + 'px');
+  }
+  updateVvh();
+  window.addEventListener('resize', updateVvh);
+  try {
+    if (window.visualViewport) {
+      window.visualViewport.addEventListener('resize', updateVvh);
+      window.visualViewport.addEventListener('scroll', updateVvh);
+    }
+  } catch (e) { /* ignore */ }
+
+  function isPhone() {
+    return window.matchMedia('(max-width: 767px)').matches;
+  }
 
   function openBuddyWindow() {
-    if (!footerTerm) return;
-    footerTerm.classList.add('open');
+    if (isPhone()) {
+      if (buddySheet) {
+        buddySheet.classList.add('open');
+        if (buddyDock) buddyDock.classList.add('hidden');
+      }
+    } else if (footerTerm) {
+      footerTerm.classList.add('open');
+    }
     const input = document.getElementById('buddyInput');
     if (input) setTimeout(() => input.focus(), 250);
   }
   function closeBuddyWindow() {
-    if (!footerTerm) return;
-    footerTerm.classList.remove('open');
+    if (buddySheet) buddySheet.classList.remove('open');
+    if (footerTerm) footerTerm.classList.remove('open');
+    if (buddyDock) buddyDock.classList.remove('hidden');
+    if (buddyDock) buddyDock.focus();
   }
 
-  footerToggle.addEventListener('click', () => {
-    if (footerTerm && footerTerm.classList.contains('open')) closeBuddyWindow();
-    else openBuddyWindow();
-  });
+  if (buddyDock) {
+    buddyDock.addEventListener('click', () => {
+      if (buddySheet && buddySheet.classList.contains('open')) closeBuddyWindow();
+      else openBuddyWindow();
+    });
+  }
   if (ftClose) ftClose.addEventListener('click', closeBuddyWindow);
+
+  // Keep the phone sheet pinned above the keyboard (visualViewport).
+  try {
+    if (window.visualViewport) {
+      window.visualViewport.addEventListener('resize', () => {
+        if (!buddySheet || !buddySheet.classList.contains('open')) return;
+        const vv = window.visualViewport;
+        const kb = vv.height - vv.height - vv.offsetTop;
+        if (kb > 50) {
+          buddySheet.style.transform = `translateY(${vv.height - vv.height - vv.offsetTop}px)`;
+        } else {
+          buddySheet.style.transform = '';
+        }
+      });
+    }
+  } catch (e) { /* ignore */ }
 
   // ── Back to Top ────────────────────────────────────────────────────────
   document.getElementById('backToTop').addEventListener('click', () => {
@@ -718,7 +803,13 @@ document.addEventListener('DOMContentLoaded', () => {
       gain.gain.exponentialRampToValueAtTime(0.001, ctx.currentTime + 0.4);
       osc.connect(gain).connect(masterGain);
       osc.start(); osc.stop(ctx.currentTime + 0.4);
-      spawnRipple(); spawnNote('#f5b942'); jumpWaveform();
+      const piece = drumSvg?.querySelector('[data-sound="kick"]');
+      if (piece) {
+        const floor = drumSvg?.querySelector('.neon-floor');
+        if (floor) { floor.classList.remove('flash'); void floor.offsetWidth; floor.classList.add('flash'); }
+        setTimeout(() => floor && floor.classList.remove('flash'), 160);
+      }
+      spawnRipple(); spawnSparks(); spawnNote('#f5b942'); jumpWaveform();
     }
 
     function playSnare() {
@@ -795,7 +886,7 @@ document.addEventListener('DOMContentLoaded', () => {
       gain.gain.exponentialRampToValueAtTime(0.001, ctx.currentTime + dur);
       noise.connect(hp).connect(bp).connect(gain).connect(masterGain);
       noise.start(); noise.stop(ctx.currentTime + dur);
-      animateCymbal('crash'); spawnNote('#f59e0b'); jumpWaveform();
+      animateCymbal('crash'); spawnSparks(); spawnNote('#f59e0b'); jumpWaveform();
     }
 
     function playRide() {
@@ -827,15 +918,29 @@ document.addEventListener('DOMContentLoaded', () => {
       const el = drumSvg?.querySelector(`[data-sound="${id}"]`);
       if (el) { el.classList.remove('wobble'); void el.offsetWidth; el.classList.add('wobble'); }
     }
+    const reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
     function spawnRipple() {
-      if (!drumSvg || !document.querySelector('[style*="reduced-motion"]')) return;
-      const ripple = document.createElementNS('http://www.w3.org/2000/svg', 'circle');
-      ripple.setAttribute('cx', '60'); ripple.setAttribute('cy', '70');
-      ripple.setAttribute('r', '10'); ripple.setAttribute('fill', 'none');
-      ripple.setAttribute('stroke', '#f5b942'); ripple.setAttribute('stroke-width', '2');
-      ripple.style.animation = 'rippleOut 0.5s ease-out forwards';
+      if (!drumSvg || reducedMotion) return;
+      const ripple = document.createElementNS('http://www.w3.org/2000/svg', 'ellipse');
+      ripple.setAttribute('class', 'ripple-ellipse');
+      ripple.setAttribute('cx', '200'); ripple.setAttribute('cy', '200');
+      ripple.setAttribute('rx', '20'); ripple.setAttribute('ry', '14');
+      ripple.style.animation = 'rippleOut 0.6s ease-out forwards';
       drumSvg.appendChild(ripple);
-      setTimeout(() => ripple.remove(), 500);
+      setTimeout(() => ripple.remove(), 600);
+    }
+    function spawnSparks() {
+      if (!drumSvg || reducedMotion) return;
+      for (let i = 0; i < 4; i++) {
+        const s = document.createElementNS('http://www.w3.org/2000/svg', 'circle');
+        s.setAttribute('class', 'spark-dot');
+        s.setAttribute('cx', 200 + (Math.random() * 60 - 30));
+        s.setAttribute('cy', 120 + Math.random() * 40);
+        s.setAttribute('r', 1.5);
+        s.style.animation = `sparkUp ${0.4 + Math.random() * 0.3}s ease-out forwards`;
+        drumSvg.appendChild(s);
+        setTimeout(() => s.remove(), 700);
+      }
     }
     function spawnNote(color) {
       if (!drumKitEl) return;
@@ -902,17 +1007,59 @@ document.addEventListener('DOMContentLoaded', () => {
         }
       }
     });
+
+    // C5: idle neon life — breathing glow + one flickering segment
+    const glowGroup = drumSvg.querySelector('.neon-glow');
+    if (glowGroup) glowGroup.classList.add('neon-breathe');
+    const flicker = drumSvg.querySelector('#neonFlicker');
+    if (flicker) flicker.classList.add('neon-flicker');
+
+    // Auto-demo a 2-second beat when the card first scrolls into view.
+    let demoStarted = false, demoTimer = null, demoRaf = null;
+    function stopDemo() { if (demoTimer) { clearInterval(demoTimer); demoTimer = null; } if (demoRaf) { cancelAnimationFrame(demoRaf); demoRaf = null; } }
+    function demoBeat() {
+      const seq = [
+        ['kick', 0], ['snare', 220], ['kick', 440], ['snare', 660],
+        ['kick', 880], ['hihat', 1080], ['snare', 1200], ['crash', 1400]
+      ];
+      const start = performance.now();
+      function step() {
+        const now = performance.now() - start;
+        const item = seq.find(s => Math.abs(now - s[1]) < 30);
+        if (item) {
+          const el = drumSvg?.querySelector(`[data-sound="${item[0]}"]`);
+          if (el) {
+            soundMap[item[0]]?.();
+            el.classList.remove('hit'); void el.offsetWidth; el.classList.add('hit');
+          }
+        }
+        if (now < 2200) demoRaf = requestAnimationFrame(step);
+        else stopDemo();
+      }
+      step();
+    }
+    const demoObserver = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting && !demoStarted) {
+          demoStarted = true;
+          setTimeout(() => { demoBeat(); }, 400);
+        }
+      });
+    }, { threshold: 0, rootMargin: '50px' });
+    demoObserver.observe(drumKitEl);
+    // Stop the demo once the user has touched the drums.
+    drumSvg.addEventListener('pointerdown', () => { stopDemo(); }, { once: true });
   } catch (e) { console.error('Drum kit error:', e); }
 
   // ── Hobbies: Code Editor Typing Animation ──────────────────────────────
-  const codeBody = document.getElementById('codeBody');
+  const codeBody = document.getElementById('editorBody');
   if (codeBody) {
     // Fixed-size box: 6 short lines, each under 32 chars, so the card never grows.
     const snippet = [
-      '<span class="c-tag">&lt;div</span> <span class="c-attr">class=</span><span class="c-str">"portfolio"</span><span class="c-tag">&gt;</span>',
-      '  <span class="c-tag">&lt;h1</span><span class="c-tag">&gt;</span>Simon<span class="c-tag">&lt;/h1&gt;</span>',
-      '  <span class="c-tag">&lt;section</span> <span class="c-attr">id=</span><span class="c-str">"about"</span><span class="c-tag">&gt;</span>',
-      '    <span class="c-comment">// mission control</span>'
+      '<span class="code-tag">&lt;div</span> <span class="code-attr">class=</span><span class="code-str">"portfolio"</span><span class="code-tag">&gt;</span>',
+      '  <span class="code-tag">&lt;h1</span><span class="code-tag">&gt;</span>Simon<span class="code-tag">&lt;/h1&gt;</span>',
+      '  <span class="code-tag">&lt;section</span> <span class="code-attr">id=</span><span class="code-str">"about"</span><span class="code-tag">&gt;</span>',
+      '    <span class="code-comment">// mission control</span>'
     ];
     // Pre-build the fixed number of lines so the box height never changes.
     const lines = snippet.map(() => document.createElement('div'));
@@ -1304,18 +1451,31 @@ document.addEventListener('DOMContentLoaded', () => {
     });
 
     // Open buddy window with typing indicator on first open
-    const ftToggle = document.querySelector('.ft-toggle-glass-btn');
     let buddyOpened = false;
-    if (ftToggle && footerTerm) {
-      ftToggle.addEventListener('click', () => {
-        if (!buddyOpened) {
-          buddyOpened = true;
-          const typing = showTyping();
-          setTimeout(() => {
-            if (typing.parentNode) buddyBody.removeChild(typing);
-            addMessage("Hi! I'm Simon's buddy 👋 Ask me anything about Simon.", false);
-          }, 1500);
+    function openWithGreeting() {
+      if (buddyOpened) return;
+      buddyOpened = true;
+      const typing = showTyping();
+      setTimeout(() => {
+        if (typing.parentNode) buddyBody.removeChild(typing);
+        addMessage("Hi! I'm Simon's buddy 👋 Ask me anything about Simon.", false);
+      }, 1500);
+    }
+    [buddyDock, ftClose].forEach(el => {
+      if (el) el.addEventListener('click', () => {
+        if (buddySheet && buddySheet.classList.contains('open')) {
+          closeBuddyWindow();
+        } else {
+          openBuddyWindow();
+          openWithGreeting();
         }
+      });
+    });
+    if (footerTerm) {
+      footerTerm.addEventListener('click', (e) => {
+        if (e.target.closest('.ft-close')) return;
+        openBuddyWindow();
+        openWithGreeting();
       });
     }
   } catch (e) { console.error('Buddy init error:', e); }
